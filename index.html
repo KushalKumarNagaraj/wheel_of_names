@@ -321,8 +321,8 @@
 
 <!-- Language toggle -->
 <div class="lang-toggle">
-  <button id="btn-lang-en" class="active" onclick="setLang('en')">EN</button>
-  <button id="btn-lang-de" onclick="setLang('de')">DE</button>
+  <button id="btn-lang-en" onclick="setLang('en')">EN</button>
+  <button id="btn-lang-de" class="active" onclick="setLang('de')">DE</button>
 </div>
 
 <div class="page">
@@ -758,11 +758,12 @@ function stopConfetti() {
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
-setLang('en');   // apply translations on load
+setLang('de');
 
 [
-  'Isha', 'Aanya', 'Riya', 'Priya', 'Neha',
-  'Arjun', 'Rohan', 'Vivaan', 'Aditya', 'Ishaan',
+  'Isha', 'Martha', 'Anna', 'Iram', 'Alina',
+  'Elena', 'Nicolle', 'Valerie', 'Gamya', 'Aashrith',
+  'Binie', 'Malik', 'Yojith', 'Ivaan',
 ].forEach(n => addName(n));
 
 drawWheel();
