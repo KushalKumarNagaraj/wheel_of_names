@@ -835,9 +835,33 @@ document.getElementById('btn-remove').addEventListener('click', () => {
   closeModal();
   renderNameList();
   renderPickedList();
-  drawWheel();
+  snapToBoundary();
   document.getElementById('spin-btn').disabled = names.length === 0;
 });
+
+function snapToBoundary() {
+  if (names.length === 0) { drawWheel(); return; }
+  const slice = (Math.PI * 2) / names.length;
+  // Where the pointer sits in the wheel's local frame
+  const norm  = ((-currentAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+  // Nearest boundary (multiple of slice)
+  const nearestBoundary = Math.round(norm / slice) * slice;
+  // Delta to apply to currentAngle (always within half a slice)
+  const delta = norm - nearestBoundary;
+  const startAngle  = currentAngle;
+  const targetAngle = currentAngle + delta;
+  const startTime   = performance.now();
+  const duration    = 350;
+
+  function frame(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    currentAngle = startAngle + delta * ease;
+    drawWheel();
+    if (progress < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
 
 document.getElementById('btn-keep').addEventListener('click', () => {
   pendingWinner = null;
