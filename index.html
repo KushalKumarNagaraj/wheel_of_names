@@ -411,7 +411,7 @@
 const TRANSLATIONS = {
   en: {
     birthday:      "🎂 Isha's 9th Birthday 🎂",
-    ishaTitle:     '',
+    ishaTitle:     '⭐ The Birthday Star! ⭐',
     ishaMsg:       'Happy Birthday, Chief Astronaut! 🚀 The galaxy is yours!',
     spin:          'Spin!',
     emptyNote:     'Add names to spin the wheel',
@@ -429,7 +429,7 @@ const TRANSLATIONS = {
   },
   de: {
     birthday:      '🎂 Ishas 9. Geburtstag 🎂',
-    ishaTitle:     '',
+    ishaTitle:     '⭐ The Birthday Star! ⭐',
     ishaMsg:       'Der Geburtstagsstar darf als Erstes pinnen!',
     spin:          'Drehen!',
     emptyNote:     'Namen hinzufügen, um das Rad zu drehen',
@@ -474,7 +474,10 @@ function setLang(lang) {
   drawWheel();
 }
 
-function t(key) { return TRANSLATIONS[currentLang][key] || key; }
+function t(key) {
+  const val = TRANSLATIONS[currentLang][key];
+  return val !== undefined ? val : key;
+}
 
 // ─── Palette ─────────────────────────────────────────────────────────────────
 const COLORS = [
