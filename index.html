@@ -368,22 +368,6 @@
       z-index: 99;
     }
 
-    /* ── Pin the Star button ── */
-    #pin-star-btn {
-      padding: 12px 28px;
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      border: none;
-      border-radius: 50px;
-      color: #050a1a;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 16px rgba(251,191,36,0.4);
-    }
-    #pin-star-btn:hover { transform: scale(1.06); box-shadow: 0 6px 24px rgba(251,191,36,0.6); }
-
     /* ── Planet picker modal ── */
     #planet-modal {
       display: none;
@@ -513,7 +497,6 @@
         <button id="spin-btn" data-i18n="spin"></button>
         <button id="restart-btn" title="restart" data-i18n="restart">↺</button>
       </div>
-      <button id="pin-star-btn" data-i18n="pinStarBtn"></button>
       <p class="empty-note" id="empty-note" style="display:none" data-i18n="emptyNote"></p>
     </div>
 
@@ -1050,7 +1033,6 @@ function selectPlanet(p) {
   startConfetti();
 }
 
-document.getElementById('pin-star-btn').addEventListener('click', showPlanetPicker);
 document.getElementById('reveal-modal').addEventListener('click', () => {
   document.getElementById('reveal-modal').classList.remove('show');
   stopConfetti();
