@@ -15,13 +15,42 @@
       overflow-x: hidden;
     }
 
-    /* Stars background */
     #stars-canvas {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       pointer-events: none;
       z-index: 0;
+    }
+
+    /* ── Language toggle ── */
+    .lang-toggle {
+      position: fixed;
+      top: 14px;
+      right: 16px;
+      z-index: 50;
+      display: flex;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(167,139,250,0.3);
+      border-radius: 50px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .lang-toggle button {
+      padding: 5px 13px;
+      border-radius: 50px;
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      background: transparent;
+      color: #94a3b8;
+    }
+    .lang-toggle button.active {
+      background: #a78bfa;
+      color: #050a1a;
     }
 
     .page {
@@ -78,7 +107,6 @@
       filter: drop-shadow(0 0 24px rgba(167,139,250,0.5));
     }
 
-    /* Pointer arrow at the right side */
     .pointer {
       position: absolute;
       right: -18px;
@@ -110,10 +138,7 @@
       transform: scale(1.06);
       box-shadow: 0 6px 28px rgba(167,139,250,0.7);
     }
-    #spin-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    #spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .empty-note {
       color: #a78bfa;
@@ -146,10 +171,7 @@
       margin-bottom: 12px;
     }
 
-    .name-input-row {
-      display: flex;
-      gap: 8px;
-    }
+    .name-input-row { display: flex; gap: 8px; }
     .name-input-row input {
       flex: 1;
       padding: 9px 12px;
@@ -160,9 +182,7 @@
       font-size: 0.95rem;
       outline: none;
     }
-    .name-input-row input:focus {
-      border-color: #a78bfa;
-    }
+    .name-input-row input:focus { border-color: #a78bfa; }
     .name-input-row button {
       padding: 9px 14px;
       border-radius: 10px;
@@ -194,11 +214,7 @@
       font-size: 0.9rem;
       gap: 8px;
     }
-    .name-list li .dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .name-list li .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
     .name-list li .name-text { flex: 1; }
     .name-list li button {
       background: none;
@@ -231,7 +247,6 @@
       gap: 8px;
     }
     .picked-list li::before { content: '🚀'; font-size: 0.8em; }
-
     .no-picks { color: #475569; font-size: 0.85rem; font-style: italic; }
 
     /* ── Winner modal ── */
@@ -304,8 +319,14 @@
 <canvas id="stars-canvas"></canvas>
 <canvas id="confetti-canvas"></canvas>
 
+<!-- Language toggle -->
+<div class="lang-toggle">
+  <button id="btn-lang-en" class="active" onclick="setLang('en')">EN</button>
+  <button id="btn-lang-de" onclick="setLang('de')">DE</button>
+</div>
+
 <div class="page">
-  <h1>🚀 Wheel of Names<span>Isha's Space Party</span></h1>
+  <h1>🚀 <span data-i18n="title"></span><span data-i18n="subtitle"></span></h1>
 
   <div class="main-area">
     <div class="wheel-wrap">
@@ -313,25 +334,25 @@
         <canvas id="wheel-canvas" width="420" height="420"></canvas>
         <div class="pointer"></div>
       </div>
-      <button id="spin-btn">Spin!</button>
-      <p class="empty-note" id="empty-note" style="display:none">Add names to spin the wheel</p>
+      <button id="spin-btn" data-i18n="spin"></button>
+      <p class="empty-note" id="empty-note" style="display:none" data-i18n="emptyNote"></p>
     </div>
 
     <div class="panels">
       <div class="panel">
-        <h2>👾 Names on the wheel</h2>
+        <h2>👾 <span data-i18n="panelNames"></span></h2>
         <div class="name-input-row">
-          <input type="text" id="name-input" placeholder="Add a name…" maxlength="30" />
-          <button id="add-btn" title="Add name">+</button>
+          <input type="text" id="name-input" data-i18n-placeholder="placeholder" maxlength="30" />
+          <button id="add-btn" data-i18n-title="addTitle">+</button>
         </div>
         <br/>
         <ul class="name-list" id="name-list"></ul>
       </div>
 
       <div class="panel">
-        <h2>🌟 Already picked</h2>
+        <h2>🌟 <span data-i18n="panelPicked"></span></h2>
         <ul class="picked-list" id="picked-list">
-          <li class="no-picks" id="no-picks-msg">No one picked yet</li>
+          <li class="no-picks" id="no-picks-msg" data-i18n="noPicks"></li>
         </ul>
       </div>
     </div>
@@ -341,17 +362,82 @@
 <div id="winner-modal">
   <div class="modal-box">
     <div class="trophy">🏆</div>
-    <h2>Astronaut selected!</h2>
+    <h2 data-i18n="modalTitle"></h2>
     <div class="winner-name" id="winner-name-text"></div>
-    <p>Remove from the wheel for the next spin?</p>
+    <p data-i18n="modalQuestion"></p>
     <div class="modal-buttons">
-      <button class="btn-remove" id="btn-remove">Remove & continue</button>
-      <button class="btn-keep"   id="btn-keep">Keep on wheel</button>
+      <button class="btn-remove" id="btn-remove" data-i18n="btnRemove"></button>
+      <button class="btn-keep"   id="btn-keep"   data-i18n="btnKeep"></button>
     </div>
   </div>
 </div>
 
 <script>
+// ─── i18n ─────────────────────────────────────────────────────────────────────
+const TRANSLATIONS = {
+  en: {
+    title:         'Wheel of Names',
+    subtitle:      "Isha's Space Party",
+    spin:          'Spin!',
+    emptyNote:     'Add names to spin the wheel',
+    panelNames:    'Names on the wheel',
+    placeholder:   'Add a name…',
+    addTitle:      'Add name',
+    panelPicked:   'Already picked',
+    noPicks:       'No one picked yet',
+    modalTitle:    'Astronaut selected!',
+    modalQuestion: 'Remove from the wheel for the next spin?',
+    btnRemove:     'Remove & continue',
+    btnKeep:       'Keep on wheel',
+    wheelEmpty:    'Add names!',
+  },
+  de: {
+    title:         'Namensrad',
+    subtitle:      'Ishas Weltraum-Party',
+    spin:          'Drehen!',
+    emptyNote:     'Namen hinzufügen, um das Rad zu drehen',
+    panelNames:    'Namen auf dem Rad',
+    placeholder:   'Name hinzufügen…',
+    addTitle:      'Name hinzufügen',
+    panelPicked:   'Bereits ausgewählt',
+    noPicks:       'Noch niemand ausgewählt',
+    modalTitle:    'Astronaut ausgewählt!',
+    modalQuestion: 'Vom Rad entfernen für die nächste Runde?',
+    btnRemove:     'Entfernen & weiter',
+    btnKeep:       'Auf dem Rad behalten',
+    wheelEmpty:    'Namen hinzufügen!',
+  },
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = TRANSLATIONS[lang];
+
+  document.documentElement.lang = lang;
+  document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-lang-de').classList.toggle('active', lang === 'de');
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.dataset.i18nTitle;
+    if (t[key] !== undefined) el.title = t[key];
+  });
+
+  // Redraw wheel in case empty-state text needs updating
+  drawWheel();
+}
+
+function t(key) { return TRANSLATIONS[currentLang][key] || key; }
+
 // ─── Palette ─────────────────────────────────────────────────────────────────
 const COLORS = [
   '#6c2bd9','#2563eb','#0891b2','#059669','#d97706',
@@ -360,10 +446,10 @@ const COLORS = [
 ];
 
 // ─── State ───────────────────────────────────────────────────────────────────
-let names   = [];   // { name, color }
+let names   = [];
 let picked  = [];
 let spinning = false;
-let currentAngle = 0;   // radians, offset of the wheel
+let currentAngle = 0;
 let animId  = null;
 let pendingWinner = null;
 
@@ -413,7 +499,6 @@ function drawWheel() {
   const n = names.length;
 
   if (n === 0) {
-    // empty state
     wctx.beginPath();
     wctx.arc(CX, CY, R, 0, Math.PI * 2);
     wctx.fillStyle = '#1e1b4b';
@@ -425,7 +510,7 @@ function drawWheel() {
     wctx.font = 'bold 20px Segoe UI';
     wctx.textAlign = 'center';
     wctx.textBaseline = 'middle';
-    wctx.fillText('Add names!', CX, CY);
+    wctx.fillText(t('wheelEmpty'), CX, CY);
     return;
   }
 
@@ -435,7 +520,6 @@ function drawWheel() {
     const start = currentAngle + i * slice;
     const end   = start + slice;
 
-    // Segment
     wctx.beginPath();
     wctx.moveTo(CX, CY);
     wctx.arc(CX, CY, R, start, end);
@@ -446,18 +530,17 @@ function drawWheel() {
     wctx.lineWidth = 2;
     wctx.stroke();
 
-    // Text
-    const mid = start + slice / 2;
+    const mid  = start + slice / 2;
     const textR = R * 0.62;
     const tx = CX + Math.cos(mid) * textR;
     const ty = CY + Math.sin(mid) * textR;
 
     wctx.save();
     wctx.translate(tx, ty);
-    wctx.rotate(mid + Math.PI / 2);   // read top-down radially
+    wctx.rotate(mid + Math.PI / 2);
 
     const maxW = slice < Math.PI ? (R * 0.55) : (R * 0.7);
-    let fontSize = Math.min(18, Math.max(10, 260 / n));
+    const fontSize = Math.min(18, Math.max(10, 260 / n));
     wctx.font = `bold ${fontSize}px Segoe UI`;
     wctx.fillStyle = '#ffffff';
     wctx.textAlign = 'center';
@@ -465,18 +548,14 @@ function drawWheel() {
     wctx.shadowColor = 'rgba(0,0,0,0.6)';
     wctx.shadowBlur = 4;
 
-    // Truncate if needed
     let label = item.name;
-    while (wctx.measureText(label).width > maxW && label.length > 3) {
-      label = label.slice(0, -1);
-    }
+    while (wctx.measureText(label).width > maxW && label.length > 3) label = label.slice(0, -1);
     if (label !== item.name) label = label.slice(0, -1) + '…';
 
     wctx.fillText(label, 0, 0);
     wctx.restore();
   });
 
-  // Center hub
   wctx.beginPath();
   wctx.arc(CX, CY, 20, 0, Math.PI * 2);
   wctx.fillStyle = '#0f172a';
@@ -488,15 +567,8 @@ function drawWheel() {
 
 // ─── Spin logic ───────────────────────────────────────────────────────────────
 function getWinnerIndex() {
-  // Pointer is at the RIGHT (angle 0). Winner is the segment covering angle 0.
   const n = names.length;
   const slice = (Math.PI * 2) / n;
-  // Normalize currentAngle to [0, 2π)
-  let a = ((currentAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-  // Angle 0 from right; which segment covers 0?
-  // segment i covers [i*slice, (i+1)*slice) relative to currentAngle=0 start
-  // We need: currentAngle + i*slice <= 0 < currentAngle + (i+1)*slice
-  // equivalent: -currentAngle in [i*slice, (i+1)*slice)
   let target = ((-currentAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
   return Math.floor(target / slice) % n;
 }
@@ -508,24 +580,21 @@ function spin() {
   spinning = true;
   document.getElementById('spin-btn').disabled = true;
 
-  const extraSpins = 5 + Math.random() * 5;          // 5–10 full rotations
-  const extraAngle = Math.random() * Math.PI * 2;    // random landing
+  const extraSpins = 5 + Math.random() * 5;
+  const extraAngle = Math.random() * Math.PI * 2;
   const totalAngle = extraSpins * Math.PI * 2 + extraAngle;
-  const duration   = 3500 + Math.random() * 1500;    // 3.5–5s
+  const duration   = 3500 + Math.random() * 1500;
   const startAngle = currentAngle;
   const startTime  = performance.now();
 
-  function easeOut(t) {
-    return 1 - Math.pow(1 - t, 4);   // quartic ease-out
-  }
+  function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
 
   function frame(now) {
     const elapsed = now - startTime;
-    const t = Math.min(elapsed / duration, 1);
-    currentAngle = startAngle + totalAngle * easeOut(t);
+    const progress = Math.min(elapsed / duration, 1);
+    currentAngle = startAngle + totalAngle * easeOut(progress);
     drawWheel();
-
-    if (t < 1) {
+    if (progress < 1) {
       animId = requestAnimationFrame(frame);
     } else {
       spinning = false;
@@ -539,9 +608,7 @@ function spin() {
 function showWinner() {
   const idx = getWinnerIndex();
   pendingWinner = idx;
-  const winnerName = names[idx].name;
-
-  document.getElementById('winner-name-text').textContent = winnerName;
+  document.getElementById('winner-name-text').textContent = names[idx].name;
   document.getElementById('winner-modal').classList.add('show');
   startConfetti();
 }
@@ -590,7 +657,7 @@ function removeName(i) {
 }
 
 function updateSpinBtn() {
-  const btn = document.getElementById('spin-btn');
+  const btn  = document.getElementById('spin-btn');
   const note = document.getElementById('empty-note');
   btn.disabled = names.length === 0;
   note.style.display = names.length === 0 ? 'block' : 'none';
@@ -600,14 +667,14 @@ function renderNameList() {
   const ul = document.getElementById('name-list');
   ul.innerHTML = '';
   names.forEach((item, i) => {
-    const li = document.createElement('li');
-    const dot = document.createElement('span');
+    const li   = document.createElement('li');
+    const dot  = document.createElement('span');
     dot.className = 'dot';
     dot.style.background = item.color;
     const span = document.createElement('span');
     span.className = 'name-text';
     span.textContent = item.name;
-    const btn = document.createElement('button');
+    const btn  = document.createElement('button');
     btn.textContent = '×';
     btn.title = 'Remove';
     btn.addEventListener('click', () => removeName(i));
@@ -618,13 +685,13 @@ function renderNameList() {
 
 function renderPickedList() {
   const ul = document.getElementById('picked-list');
-  const msg = document.getElementById('no-picks-msg');
   ul.innerHTML = '';
   if (picked.length === 0) {
     const li = document.createElement('li');
     li.id = 'no-picks-msg';
     li.className = 'no-picks';
-    li.textContent = 'No one picked yet';
+    li.setAttribute('data-i18n', 'noPicks');
+    li.textContent = t('noPicks');
     ul.appendChild(li);
     return;
   }
@@ -650,7 +717,6 @@ const confCanvas = document.getElementById('confetti-canvas');
 const cctx = confCanvas.getContext('2d');
 let confParticles = [];
 let confAnimId = null;
-
 const CONF_COLORS = ['#ff6ec7','#a78bfa','#60d8ff','#fbbf24','#34d399','#f87171'];
 
 function startConfetti() {
@@ -674,10 +740,7 @@ function drawConfetti() {
   cctx.clearRect(0, 0, confCanvas.width, confCanvas.height);
   let alive = false;
   confParticles.forEach(p => {
-    p.x  += p.vx;
-    p.y  += p.vy;
-    p.vy += 0.07;
-    p.rot += p.drot;
+    p.x += p.vx; p.y += p.vy; p.vy += 0.07; p.rot += p.drot;
     if (p.y < confCanvas.height + 20) alive = true;
     cctx.save();
     cctx.translate(p.x, p.y);
@@ -694,7 +757,9 @@ function stopConfetti() {
   cctx.clearRect(0, 0, confCanvas.width, confCanvas.height);
 }
 
-// ─── Default names ────────────────────────────────────────────────────────────
+// ─── Init ─────────────────────────────────────────────────────────────────────
+setLang('en');   // apply translations on load
+
 [
   'Isha', 'Aanya', 'Riya', 'Priya', 'Neha',
   'Arjun', 'Rohan', 'Vivaan', 'Aditya', 'Ishaan',
