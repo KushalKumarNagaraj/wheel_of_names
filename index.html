@@ -140,6 +140,25 @@
     }
     #spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+    .spin-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #restart-btn {
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(167,139,250,0.4);
+      border-radius: 50px;
+      color: #a78bfa;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+    }
+    #restart-btn:hover { background: rgba(167,139,250,0.2); transform: scale(1.06); }
+
     .empty-note {
       color: #a78bfa;
       font-size: 0.9rem;
@@ -334,7 +353,10 @@
         <canvas id="wheel-canvas" width="420" height="420"></canvas>
         <div class="pointer"></div>
       </div>
-      <button id="spin-btn" data-i18n="spin"></button>
+      <div class="spin-row">
+        <button id="spin-btn" data-i18n="spin"></button>
+        <button id="restart-btn" title="restart" data-i18n="restart">↺</button>
+      </div>
       <p class="empty-note" id="empty-note" style="display:none" data-i18n="emptyNote"></p>
     </div>
 
@@ -390,6 +412,7 @@ const TRANSLATIONS = {
     btnRemove:     'Remove & continue',
     btnKeep:       'Keep on wheel',
     wheelEmpty:    'Add names!',
+    restart:       'Restart',
   },
   de: {
     title:         'Namensrad',
@@ -406,6 +429,7 @@ const TRANSLATIONS = {
     btnRemove:     'Entfernen & weiter',
     btnKeep:       'Auf dem Rad behalten',
     wheelEmpty:    'Namen hinzufügen!',
+    restart:       'Neu starten',
   },
 };
 
@@ -530,23 +554,26 @@ function drawWheel() {
     wctx.lineWidth = 2;
     wctx.stroke();
 
-    const mid  = start + slice / 2;
-    const textR = R * 0.62;
+    const mid   = start + slice / 2;
+    const textR = R * 0.58;
     const tx = CX + Math.cos(mid) * textR;
     const ty = CY + Math.sin(mid) * textR;
 
     wctx.save();
     wctx.translate(tx, ty);
-    wctx.rotate(mid + Math.PI / 2);
+    // Radial text: flip left-half segments so text always reads outward
+    const normMid = ((mid % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+    const flip = normMid > Math.PI / 2 && normMid < Math.PI * 3 / 2;
+    wctx.rotate(flip ? mid + Math.PI : mid);
 
-    const maxW = slice < Math.PI ? (R * 0.55) : (R * 0.7);
-    const fontSize = Math.min(18, Math.max(10, 260 / n));
+    const maxW  = R * 0.65;
+    const fontSize = Math.min(15, Math.max(9, Math.floor(maxW / (item.name.length * 0.72))));
     wctx.font = `bold ${fontSize}px Segoe UI`;
     wctx.fillStyle = '#ffffff';
     wctx.textAlign = 'center';
     wctx.textBaseline = 'middle';
-    wctx.shadowColor = 'rgba(0,0,0,0.6)';
-    wctx.shadowBlur = 4;
+    wctx.shadowColor = 'rgba(0,0,0,0.7)';
+    wctx.shadowBlur = 3;
 
     let label = item.name;
     while (wctx.measureText(label).width > maxW && label.length > 3) label = label.slice(0, -1);
@@ -757,15 +784,31 @@ function stopConfetti() {
   cctx.clearRect(0, 0, confCanvas.width, confCanvas.height);
 }
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
-setLang('de');
-
-[
+// ─── Restart ──────────────────────────────────────────────────────────────────
+const DEFAULT_NAMES = [
   'Isha', 'Martha', 'Anna', 'Iram', 'Alina',
   'Elena', 'Nicolle', 'Valerie', 'Gamya', 'Aashrith',
   'Binie', 'Malik', 'Yojith', 'Ivaan',
-].forEach(n => addName(n));
+];
 
+function restart() {
+  names    = [];
+  picked   = [];
+  colorIdx = 0;
+  currentAngle = 0;
+  pendingWinner = null;
+  closeModal();
+  DEFAULT_NAMES.forEach(n => addName(n));
+  renderPickedList();
+  drawWheel();
+  updateSpinBtn();
+}
+
+document.getElementById('restart-btn').addEventListener('click', restart);
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+setLang('de');
+DEFAULT_NAMES.forEach(n => addName(n));
 drawWheel();
 updateSpinBtn();
 </script>
