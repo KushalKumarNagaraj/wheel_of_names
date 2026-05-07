@@ -396,9 +396,9 @@
 <div id="winner-modal">
   <div class="modal-box">
     <div class="trophy">🏆</div>
-    <h2 data-i18n="modalTitle"></h2>
+    <h2 id="modal-title" data-i18n="modalTitle"></h2>
     <div class="winner-name" id="winner-name-text"></div>
-    <p data-i18n="modalQuestion"></p>
+    <p id="modal-msg" data-i18n="modalQuestion"></p>
     <div class="modal-buttons">
       <button class="btn-remove" id="btn-remove" data-i18n="btnRemove"></button>
       <button class="btn-keep"   id="btn-keep"   data-i18n="btnKeep"></button>
@@ -411,6 +411,8 @@
 const TRANSLATIONS = {
   en: {
     birthday:      "🎂 Isha's 9th Birthday 🎂",
+    ishaTitle:     '⭐ The Birthday Star! ⭐',
+    ishaMsg:       'The Birthday Star gets to pin first!',
     spin:          'Spin!',
     emptyNote:     'Add names to spin the wheel',
     panelNames:    'Names on the wheel',
@@ -427,6 +429,8 @@ const TRANSLATIONS = {
   },
   de: {
     birthday:      '🎂 Ishas 9. Geburtstag 🎂',
+    ishaTitle:     '⭐ Der Geburtstagsstar! ⭐',
+    ishaMsg:       'Der Geburtstagsstar darf als Erstes pinnen!',
     spin:          'Drehen!',
     emptyNote:     'Namen hinzufügen, um das Rad zu drehen',
     panelNames:    'Namen auf dem Rad',
@@ -659,7 +663,11 @@ function spin() {
 function showWinner() {
   const idx = getWinnerIndex();
   pendingWinner = idx;
+  const isIsha = names[idx].name === 'Isha';
+
   document.getElementById('winner-name-text').textContent = names[idx].name;
+  document.getElementById('modal-title').textContent  = isIsha ? t('ishaTitle')     : t('modalTitle');
+  document.getElementById('modal-msg').textContent    = isIsha ? t('ishaMsg')        : t('modalQuestion');
   document.getElementById('winner-modal').classList.add('show');
   startConfetti();
 }
