@@ -156,12 +156,6 @@
     }
     #spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    .spin-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
     #restart-btn {
       padding: 14px 18px;
       font-size: 1rem;
@@ -493,10 +487,8 @@
         <canvas id="wheel-canvas" width="420" height="420"></canvas>
         <div class="pointer"></div>
       </div>
-      <div class="spin-row">
-        <button id="spin-btn" data-i18n="spin"></button>
-        <button id="restart-btn" title="restart" data-i18n="restart">↺</button>
-      </div>
+      <button id="spin-btn" data-i18n="spin"></button>
+      <button id="restart-btn" title="restart" data-i18n="restart">↺</button>
       <p class="empty-note" id="empty-note" style="display:none" data-i18n="emptyNote"></p>
     </div>
 
