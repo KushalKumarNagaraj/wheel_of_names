@@ -459,6 +459,59 @@
       display: inline-block;
     }
     .reveal-tap-hint { font-size: 0.8rem; color: #475569; letter-spacing: 2px; text-transform: uppercase; }
+
+    /* ── Password modal ── */
+    #pw-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5,10,26,0.85);
+      z-index: 130;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    #pw-modal.show { display: flex; }
+
+    .pw-box {
+      background: linear-gradient(145deg, #0f1a3a, #1a0933);
+      border: 2px solid #a78bfa;
+      border-radius: 20px;
+      padding: 36px 40px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 0 40px rgba(167,139,250,0.3);
+      animation: pop-in 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .pw-box h2 { font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: #a78bfa; margin-bottom: 20px; }
+    .pw-box input {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(167,139,250,0.4);
+      background: rgba(255,255,255,0.07);
+      color: #e8eaf6;
+      font-size: 1.2rem;
+      letter-spacing: 6px;
+      text-align: center;
+      outline: none;
+      margin-bottom: 8px;
+    }
+    .pw-box input:focus { border-color: #a78bfa; }
+    .pw-error { color: #f87171; font-size: 0.8rem; min-height: 1.2em; margin-bottom: 16px; }
+    .pw-buttons { display: flex; gap: 10px; justify-content: center; }
+    .pw-buttons button {
+      padding: 9px 22px;
+      border-radius: 50px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .pw-buttons button:hover { transform: scale(1.05); }
+    .btn-pw-ok     { background: linear-gradient(135deg, #a78bfa, #60d8ff); color: #050a1a; }
+    .btn-pw-cancel { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
   </style>
 </head>
 <body>
@@ -527,6 +580,19 @@
   </div>
 </div>
 
+<!-- Password modal -->
+<div id="pw-modal">
+  <div class="pw-box">
+    <h2 data-i18n="pwTitle"></h2>
+    <input type="password" id="pw-input" maxlength="10" placeholder="···" />
+    <p class="pw-error" id="pw-error"></p>
+    <div class="pw-buttons">
+      <button class="btn-pw-ok"     id="btn-pw-ok"     data-i18n="pwOk"></button>
+      <button class="btn-pw-cancel" id="btn-pw-cancel" data-i18n="pwCancel"></button>
+    </div>
+  </div>
+</div>
+
 <!-- Planet picker modal -->
 <div id="planet-modal">
   <div class="planet-modal-box">
@@ -570,6 +636,10 @@ const TRANSLATIONS = {
     pickPlanet:    'Which planet was pinned?',
     tapToClose:    'Tap anywhere to close',
     panelPlanets:  'Planet Activities',
+    pwTitle:       'Enter password',
+    pwOk:          'Confirm',
+    pwCancel:      'Cancel',
+    pwWrong:       'Wrong password',
   },
   de: {
     birthday:      '🎂 Ishas 9. Geburtstag 🎂',
@@ -593,6 +663,10 @@ const TRANSLATIONS = {
     pickPlanet:    'Welcher Planet wurde getroffen?',
     tapToClose:    'Tippen zum Schließen',
     panelPlanets:  'Planeten-Aktivitäten',
+    pwTitle:       'Passwort eingeben',
+    pwOk:          'Bestätigen',
+    pwCancel:      'Abbrechen',
+    pwWrong:       'Falsches Passwort',
   },
 };
 
@@ -1080,7 +1154,31 @@ function restart() {
   updateSpinBtn();
 }
 
-document.getElementById('restart-btn').addEventListener('click', restart);
+document.getElementById('restart-btn').addEventListener('click', () => {
+  document.getElementById('pw-input').value = '';
+  document.getElementById('pw-error').textContent = '';
+  document.getElementById('pw-modal').classList.add('show');
+  setTimeout(() => document.getElementById('pw-input').focus(), 50);
+});
+
+document.getElementById('btn-pw-ok').addEventListener('click', checkPassword);
+document.getElementById('btn-pw-cancel').addEventListener('click', () => {
+  document.getElementById('pw-modal').classList.remove('show');
+});
+document.getElementById('pw-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+function checkPassword() {
+  if (document.getElementById('pw-input').value === '123') {
+    document.getElementById('pw-modal').classList.remove('show');
+    restart();
+  } else {
+    document.getElementById('pw-error').textContent = t('pwWrong');
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 setLang('de');
