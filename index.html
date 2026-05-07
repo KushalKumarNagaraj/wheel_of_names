@@ -476,6 +476,7 @@ let spinning = false;
 let currentAngle = 0;
 let animId  = null;
 let pendingWinner = null;
+let firstSpin = true;
 
 // ─── Stars background ─────────────────────────────────────────────────────────
 (function initStars() {
@@ -607,10 +608,23 @@ function spin() {
   spinning = true;
   document.getElementById('spin-btn').disabled = true;
 
-  const extraSpins = 5 + Math.random() * 5;
-  const extraAngle = Math.random() * Math.PI * 2;
-  const totalAngle = extraSpins * Math.PI * 2 + extraAngle;
-  const duration   = 3500 + Math.random() * 1500;
+  const ishaIdx = firstSpin ? names.findIndex(n => n.name === 'Isha') : -1;
+  firstSpin = false;
+
+  let totalAngle;
+  if (ishaIdx !== -1) {
+    // Deterministically land on Isha: calculate the exact angle so the pointer
+    // (at 0°) sits at the centre of Isha's segment after 7 full rotations.
+    const slice = (Math.PI * 2) / names.length;
+    const targetFinal = -(ishaIdx * slice + slice / 2);
+    totalAngle = targetFinal - currentAngle + 7 * Math.PI * 2;
+  } else {
+    const extraSpins = 5 + Math.random() * 5;
+    const extraAngle = Math.random() * Math.PI * 2;
+    totalAngle = extraSpins * Math.PI * 2 + extraAngle;
+  }
+
+  const duration = 3500 + Math.random() * 1500;
   const startAngle = currentAngle;
   const startTime  = performance.now();
 
@@ -797,6 +811,7 @@ function restart() {
   colorIdx = 0;
   currentAngle = 0;
   pendingWinner = null;
+  firstSpin = true;
   closeModal();
   DEFAULT_NAMES.forEach(n => addName(n));
   renderPickedList();
