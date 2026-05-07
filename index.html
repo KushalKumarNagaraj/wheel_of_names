@@ -399,6 +399,7 @@
     <h2 id="modal-title" data-i18n="modalTitle"></h2>
     <div class="winner-name" id="winner-name-text"></div>
     <p id="modal-msg" data-i18n="modalQuestion"></p>
+    <p id="modal-msg2" style="display:none; color:#a78bfa; font-style:italic; margin-top:-16px; margin-bottom:24px; font-size:0.88rem;"></p>
     <div class="modal-buttons">
       <button class="btn-remove" id="btn-remove" data-i18n="btnRemove"></button>
       <button class="btn-keep"   id="btn-keep"   data-i18n="btnKeep"></button>
@@ -412,7 +413,8 @@ const TRANSLATIONS = {
   en: {
     birthday:      "🎂 Isha's 9th Birthday 🎂",
     ishaTitle:     '⭐ The Birthday Star! ⭐',
-    ishaMsg:       'Happy Birthday, Chief Astronaut! 🚀 The galaxy is yours!',
+    ishaMsg1:      'Happy Birthday, Chief Astronaut! 🚀 The galaxy is yours!',
+    ishaMsg2:      'The Birthday Star gets to pin first! ⭐',
     spin:          'Spin!',
     emptyNote:     'Add names to spin the wheel',
     panelNames:    'Names on the wheel',
@@ -430,7 +432,8 @@ const TRANSLATIONS = {
   de: {
     birthday:      '🎂 Ishas 9. Geburtstag 🎂',
     ishaTitle:     '⭐ The Birthday Star! ⭐',
-    ishaMsg:       'Der Geburtstagsstar darf als Erstes pinnen!',
+    ishaMsg1:      'Alles Gute zum Geburtstag, Chef-Astronautin! 🚀 Die Galaxie gehört dir!',
+    ishaMsg2:      'Der Geburtstagsstar darf als Erstes pinnen! ⭐',
     spin:          'Drehen!',
     emptyNote:     'Namen hinzufügen, um das Rad zu drehen',
     panelNames:    'Namen auf dem Rad',
@@ -669,8 +672,11 @@ function showWinner() {
   const isIsha = names[idx].name === 'Isha';
 
   document.getElementById('winner-name-text').textContent = names[idx].name;
-  document.getElementById('modal-title').textContent  = isIsha ? t('ishaTitle')     : t('modalTitle');
-  document.getElementById('modal-msg').textContent    = isIsha ? t('ishaMsg')        : t('modalQuestion');
+  document.getElementById('modal-title').textContent = isIsha ? t('ishaTitle') : t('modalTitle');
+  document.getElementById('modal-msg').textContent   = isIsha ? t('ishaMsg1')  : t('modalQuestion');
+  const msg2 = document.getElementById('modal-msg2');
+  msg2.textContent   = isIsha ? t('ishaMsg2') : '';
+  msg2.style.display = isIsha ? 'block' : 'none';
   document.getElementById('winner-modal').classList.add('show');
   startConfetti();
 }
