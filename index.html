@@ -59,7 +59,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 16px 40px;
+      padding: 60px 16px 40px;
     }
 
     h1 {
@@ -512,6 +512,139 @@
     .pw-buttons button:hover { transform: scale(1.05); }
     .btn-pw-ok     { background: linear-gradient(135deg, #a78bfa, #60d8ff); color: #050a1a; }
     .btn-pw-cancel { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
+
+    /* ── Page transitions ── */
+    .page-screen {
+      position: fixed;
+      inset: 0;
+      overflow-y: auto;
+      transition: transform 0.45s cubic-bezier(0.77,0,0.18,1), opacity 0.45s;
+    }
+    .page-screen.hidden-right { transform: translateX(100%); opacity: 0; pointer-events: none; }
+    .page-screen.hidden-left  { transform: translateX(-100%); opacity: 0; pointer-events: none; }
+
+    /* ── Welcome page ── */
+    #page-welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .welcome-floaters {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .floater {
+      position: absolute;
+      font-size: 2.2rem;
+      animation: float 5s ease-in-out infinite;
+      opacity: 0.35;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50%       { transform: translateY(-20px) rotate(12deg); }
+    }
+
+    .welcome-birthday {
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #fbbf24;
+      text-shadow: 0 0 16px rgba(251,191,36,0.6);
+      position: relative; z-index: 1;
+    }
+    .welcome-title {
+      font-size: clamp(2rem, 7vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ff6ec7, #a78bfa, #60d8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.15;
+      position: relative; z-index: 1;
+    }
+    .welcome-game-name {
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #fff;
+      opacity: 0.9;
+      margin-top: 4px;
+      position: relative; z-index: 1;
+    }
+    .welcome-tagline {
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      color: #94a3b8;
+      margin-top: 4px;
+      margin-bottom: 16px;
+      position: relative; z-index: 1;
+    }
+    .welcome-kids {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 520px;
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+    .welcome-kids span {
+      padding: 5px 14px;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(167,139,250,0.25);
+      font-size: 0.9rem;
+      color: #c4b5fd;
+    }
+    #start-btn {
+      padding: 18px 52px;
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #a78bfa, #60d8ff);
+      border: none;
+      border-radius: 50px;
+      color: #050a1a;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 6px 28px rgba(167,139,250,0.5);
+      position: relative; z-index: 1;
+    }
+    #start-btn:hover { transform: scale(1.07); box-shadow: 0 8px 36px rgba(167,139,250,0.7); }
+
+    /* ── Game page ── */
+    #page-game { z-index: 1; }
+    #page-game.hidden-right { z-index: 1; }
+
+    #home-btn {
+      position: fixed;
+      top: 14px;
+      left: 16px;
+      z-index: 50;
+      padding: 6px 14px;
+      border-radius: 50px;
+      border: 1px solid rgba(167,139,250,0.3);
+      background: rgba(255,255,255,0.07);
+      color: #a78bfa;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #home-btn:hover { background: rgba(167,139,250,0.2); }
   </style>
 </head>
 <body>
@@ -519,48 +652,67 @@
 <canvas id="stars-canvas"></canvas>
 <canvas id="confetti-canvas"></canvas>
 
-<!-- Language toggle -->
+<!-- Language toggle (fixed, visible on both pages) -->
 <div class="lang-toggle">
   <button id="btn-lang-en" onclick="setLang('en')">EN</button>
   <button id="btn-lang-de" class="active" onclick="setLang('de')">DE</button>
 </div>
 
-<div class="page">
-  <p class="birthday-heading" data-i18n="birthday"></p>
-  <h1>⭐ Pin a Star ⭐</h1>
+<!-- ══ PAGE 1: Welcome ══ -->
+<div id="page-welcome" class="page-screen">
+  <div class="welcome-floaters" id="floaters"></div>
 
-  <div class="main-area">
-    <div class="panel planet-panel">
-      <h2 class="planet-panel-heading">🪐 <span data-i18n="panelPlanets"></span></h2>
-      <ul class="planet-ref-list" id="planet-ref-list"></ul>
-    </div>
+  <p class="welcome-birthday" data-i18n="birthday"></p>
+  <h1 class="welcome-title" data-i18n="welcomeTitle"></h1>
+  <p class="welcome-game-name">⭐ Pin a Star ⭐</p>
+  <p class="welcome-tagline" data-i18n="welcomeTagline"></p>
 
-    <div class="wheel-wrap">
-      <div class="wheel-container">
-        <canvas id="wheel-canvas" width="420" height="420"></canvas>
-        <div class="pointer"></div>
+  <div class="welcome-kids" id="welcome-kids"></div>
+
+  <button id="start-btn" data-i18n="startBtn"></button>
+</div>
+
+<!-- ══ PAGE 2: Game ══ -->
+<div id="page-game" class="page-screen hidden-right">
+  <button id="home-btn" data-i18n="homeBtn"></button>
+
+  <div class="page">
+    <p class="birthday-heading" data-i18n="birthday"></p>
+    <h1>⭐ Pin a Star ⭐</h1>
+
+    <div class="main-area">
+      <div class="panel planet-panel">
+        <h2 class="planet-panel-heading">🪐 <span data-i18n="panelPlanets"></span></h2>
+        <ul class="planet-ref-list" id="planet-ref-list"></ul>
       </div>
-      <button id="spin-btn" data-i18n="spin"></button>
-      <button id="restart-btn" title="restart" data-i18n="restart">↺</button>
-      <p class="empty-note" id="empty-note" style="display:none" data-i18n="emptyNote"></p>
-    </div>
 
-    <div class="panels">
-      <div class="panel">
-        <h2>👾 <span data-i18n="panelNames"></span></h2>
-        <div class="name-input-row">
-          <input type="text" id="name-input" data-i18n-placeholder="placeholder" maxlength="30" />
-          <button id="add-btn" data-i18n-title="addTitle">+</button>
+      <div class="wheel-wrap">
+        <div class="wheel-container">
+          <canvas id="wheel-canvas" width="420" height="420"></canvas>
+          <div class="pointer"></div>
         </div>
-        <br/>
-        <ul class="name-list" id="name-list"></ul>
+        <button id="spin-btn" data-i18n="spin"></button>
+        <button id="restart-btn" title="restart" data-i18n="restart">↺</button>
+        <p class="empty-note" id="empty-note" style="display:none" data-i18n="emptyNote"></p>
       </div>
 
-      <div class="panel">
-        <h2>🌟 <span data-i18n="panelPicked"></span></h2>
-        <ul class="picked-list" id="picked-list">
-          <li class="no-picks" id="no-picks-msg" data-i18n="noPicks"></li>
-        </ul>
+      <div class="panels">
+        <div class="panel">
+          <h2>👾 <span data-i18n="panelNames"></span></h2>
+          <div class="name-input-row">
+            <input type="text" id="name-input" data-i18n-placeholder="placeholder" maxlength="30" />
+            <button id="add-btn" data-i18n-title="addTitle">+</button>
+          </div>
+          <br/>
+          <ul class="name-list" id="name-list"></ul>
+        </div>
+
+        <div class="panel">
+          <h2>🌟 <span data-i18n="panelPicked"></span></h2>
+          <ul class="picked-list" id="picked-list">
+            <li class="no-picks" id="no-picks-msg" data-i18n="noPicks"></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -640,6 +792,10 @@ const TRANSLATIONS = {
     pwOk:          'Confirm',
     pwCancel:      'Cancel',
     pwWrong:       'Wrong password',
+    welcomeTitle:  'Welcome, Space Explorers!',
+    welcomeTagline:'Spin the wheel to see who goes first!',
+    startBtn:      '🚀 Let\'s Play!',
+    homeBtn:       '← Home',
   },
   de: {
     birthday:      '🎂 Ishas 9. Geburtstag 🎂',
@@ -667,6 +823,10 @@ const TRANSLATIONS = {
     pwOk:          'Bestätigen',
     pwCancel:      'Abbrechen',
     pwWrong:       'Falsches Passwort',
+    welcomeTitle:  'Willkommen, Weltraum-Entdecker!',
+    welcomeTagline:'Dreht das Rad und seht, wer anfängt!',
+    startBtn:      '🚀 Los geht\'s!',
+    homeBtn:       '← Startseite',
   },
 };
 
@@ -1180,9 +1340,57 @@ function checkPassword() {
   }
 }
 
+// ─── Page navigation ──────────────────────────────────────────────────────────
+function showPage(id) {
+  const welcome = document.getElementById('page-welcome');
+  const game    = document.getElementById('page-game');
+  if (id === 'game') {
+    welcome.classList.add('hidden-left');
+    welcome.classList.remove('hidden-right');
+    game.classList.remove('hidden-right');
+    game.classList.remove('hidden-left');
+  } else {
+    game.classList.add('hidden-right');
+    game.classList.remove('hidden-left');
+    welcome.classList.remove('hidden-left');
+    welcome.classList.remove('hidden-right');
+  }
+}
+
+document.getElementById('start-btn').addEventListener('click', () => showPage('game'));
+document.getElementById('home-btn').addEventListener('click',  () => showPage('welcome'));
+
+// ─── Welcome page decorations ─────────────────────────────────────────────────
+function buildWelcome() {
+  // Floating space emojis
+  const emojis = ['🚀','⭐','🌟','🪐','🌍','🌸','🔴','🛸','💫','🌙'];
+  const container = document.getElementById('floaters');
+  container.innerHTML = '';
+  emojis.forEach((e, i) => {
+    const el = document.createElement('span');
+    el.className = 'floater';
+    el.textContent = e;
+    el.style.left   = `${8 + (i * 9) % 88}%`;
+    el.style.top    = `${5 + (i * 13) % 85}%`;
+    el.style.animationDelay    = `${(i * 0.6) % 4}s`;
+    el.style.animationDuration = `${4 + (i % 3)}s`;
+    container.appendChild(el);
+  });
+
+  // Kids name badges
+  const kidsDiv = document.getElementById('welcome-kids');
+  kidsDiv.innerHTML = '';
+  DEFAULT_NAMES.forEach(name => {
+    const span = document.createElement('span');
+    span.textContent = (name === 'Isha' ? '🎂 ' : '🚀 ') + name;
+    kidsDiv.appendChild(span);
+  });
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 setLang('de');
 DEFAULT_NAMES.forEach(n => addName(n));
+buildWelcome();
 drawWheel();
 updateSpinBtn();
 </script>
