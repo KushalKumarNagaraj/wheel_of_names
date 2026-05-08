@@ -670,6 +670,7 @@
     .card-btn-cyan   { background: linear-gradient(135deg, #60d8ff, #34d399); color: #050a1a; }
     .card-btn-pink   { background: linear-gradient(135deg, #ff6ec7, #ff9a3c); color: #050a1a; }
     .card-btn-amber  { background: linear-gradient(135deg, #fbbf24, #84cc16); color: #050a1a; }
+    .card-btn-orange { background: linear-gradient(135deg, #f97316, #fbbf24); color: #050a1a; }
 
     /* ── DJ Capybara page ── */
     #page-djcap {
@@ -925,6 +926,58 @@
     .btn-mission-back   { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
     .btn-mission-next   { background: linear-gradient(135deg, #60d8ff, #a78bfa); color: #050a1a; }
 
+    /* ── Dinner page ── */
+    #page-dinner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 56px 20px 24px;
+      text-align: center;
+      gap: 10px;
+    }
+    .dinner-emoji { font-size: 3.2rem; margin-bottom: 4px; display: block; }
+    .dinner-title {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
+      background: linear-gradient(135deg, #f97316, #fbbf24, #84cc16);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 4px;
+    }
+    .dinner-sub { font-size: 0.95rem; color: #94a3b8; margin-bottom: 16px; }
+    .dinner-menu {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(249,115,22,0.3);
+      border-radius: 20px;
+      padding: 24px 32px;
+      max-width: 520px;
+      width: 100%;
+      backdrop-filter: blur(8px);
+    }
+    .dinner-menu h2 {
+      font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+      color: #f97316; margin-bottom: 20px; text-align: center;
+    }
+    .dinner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .dinner-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .dinner-item-emoji { font-size: 2.4rem; line-height: 1; }
+    .dinner-item-name {
+      font-size: 0.95rem; font-weight: 700; color: #e8eaf6; text-align: center;
+    }
+
     /* ── Dance page ── */
     #page-dance {
       display: flex;
@@ -1060,6 +1113,12 @@
       <div class="card-title" data-i18n="danceCardTitle"></div>
       <p class="card-desc" data-i18n="danceCardDesc"></p>
       <span class="card-btn card-btn-cyan" data-i18n="cardPlay"></span>
+    </div>
+    <div class="game-card" onclick="showPage('page-dinner')">
+      <span class="card-emoji">🍔🍕</span>
+      <div class="card-title" data-i18n="dinnerCardTitle"></div>
+      <p class="card-desc" data-i18n="dinnerCardDesc"></p>
+      <span class="card-btn card-btn-orange" data-i18n="cardPlay"></span>
     </div>
   </div>
 </div>
@@ -1234,6 +1293,37 @@
   </div>
 </div>
 
+<!-- ══ PAGE 7: Dinner ══ -->
+<div id="page-dinner" class="page-screen hidden-right">
+  <button class="mission-home-btn" onclick="showPage('page-welcome')" data-i18n="homeBtn"></button>
+
+  <span class="dinner-emoji">🍽️🚀</span>
+  <h1 class="dinner-title" data-i18n="dinnerTitle"></h1>
+  <p class="dinner-sub" data-i18n="dinnerSub"></p>
+
+  <div class="dinner-menu">
+    <h2 data-i18n="dinnerMenuLabel"></h2>
+    <div class="dinner-grid">
+      <div class="dinner-item">
+        <span class="dinner-item-emoji">🍔🍕</span>
+        <span class="dinner-item-name" data-i18n="dinnerItem1"></span>
+      </div>
+      <div class="dinner-item">
+        <span class="dinner-item-emoji">🍟</span>
+        <span class="dinner-item-name" data-i18n="dinnerItem2"></span>
+      </div>
+      <div class="dinner-item">
+        <span class="dinner-item-emoji">🧁</span>
+        <span class="dinner-item-name" data-i18n="dinnerItem3"></span>
+      </div>
+      <div class="dinner-item">
+        <span class="dinner-item-emoji">🧃</span>
+        <span class="dinner-item-name" data-i18n="dinnerItem4"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="winner-modal">
   <div class="modal-box">
     <div class="trophy">🏆</div>
@@ -1349,6 +1439,15 @@ const TRANSLATIONS = {
     missionNext:    'Dance Moves →',
     danceCardTitle: 'Dance Moves',
     danceCardDesc:  'Show off your best zero-gravity dance moves!',
+    dinnerCardTitle: 'Dinner Time',
+    dinnerCardDesc:  'Time to fuel up, astronauts!',
+    dinnerTitle:     'Astronaut Dinner',
+    dinnerSub:       'Fuel up, astronauts! 🚀',
+    dinnerMenuLabel: '🍽️ Menu',
+    dinnerItem1:     'Mini Burger & Pizza',
+    dinnerItem2:     'Pommes',
+    dinnerItem3:     'Cupcakes',
+    dinnerItem4:     'Juice',
     danceTitle:     'The Coolest Zero-Gravity Dance Moves',
     dancePlaylist:  '🎵 Playlist',
   },
@@ -1419,6 +1518,15 @@ const TRANSLATIONS = {
     missionNext:    'Tanzmoves →',
     danceCardTitle: 'Tanzmoves',
     danceCardDesc:  'Zeigt eure besten Schwerelosigkeits-Tanzmoves!',
+    dinnerCardTitle: 'Astronauten-Essen',
+    dinnerCardDesc:  'Energie tanken, Astronauten!',
+    dinnerTitle:     'Astronauten-Essen',
+    dinnerSub:       'Energie tanken, Astronauten! 🚀',
+    dinnerMenuLabel: '🍽️ Menü',
+    dinnerItem1:     'Mini Burger & Pizza',
+    dinnerItem2:     'Pommes',
+    dinnerItem3:     'Cupcakes',
+    dinnerItem4:     'Saft',
     danceTitle:     'Coolsten Schwerelosigkeits Tanzmoves',
     dancePlaylist:  '🎵 Playlist',
   },
@@ -1935,7 +2043,7 @@ function checkPassword() {
 }
 
 // ─── Page navigation ──────────────────────────────────────────────────────────
-const PAGE_ORDER = ['page-welcome', 'page-djcap', 'page-cake', 'page-game', 'page-mission', 'page-dance'];
+const PAGE_ORDER = ['page-welcome', 'page-djcap', 'page-cake', 'page-game', 'page-mission', 'page-dance', 'page-dinner'];
 
 function showMissionStep(n) {
   document.getElementById('mission-step1').style.display = n === 1 ? 'flex' : 'none';
