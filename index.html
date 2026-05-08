@@ -671,6 +671,18 @@
     .card-btn-pink   { background: linear-gradient(135deg, #ff6ec7, #ff9a3c); color: #050a1a; }
     .card-btn-amber  { background: linear-gradient(135deg, #fbbf24, #84cc16); color: #050a1a; }
     .card-btn-orange { background: linear-gradient(135deg, #f97316, #fbbf24); color: #050a1a; }
+    .card-time {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50px;
+      padding: 3px 10px;
+      margin-bottom: 6px;
+    }
 
     /* ── DJ Capybara page ── */
     #page-djcap {
@@ -1085,36 +1097,42 @@
 
   <div class="game-cards">
     <div class="game-card" onclick="showPage('page-djcap')">
+      <span class="card-time">15:00 – 15:30</span>
       <span class="card-emoji">🦫</span>
       <div class="card-title">DJ Capybara</div>
       <p class="card-desc" data-i18n="djcapCardDesc"></p>
       <span class="card-btn card-btn-gold" data-i18n="cardPlay"></span>
     </div>
     <div class="game-card" onclick="showPage('page-cake')">
+      <span class="card-time">15:30 – 16:00</span>
       <span class="card-emoji">🎂🚀</span>
       <div class="card-title" data-i18n="cakeCardTitle"></div>
       <p class="card-desc" data-i18n="cakeCardDesc"></p>
       <span class="card-btn card-btn-pink" data-i18n="cardPlay"></span>
     </div>
     <div class="game-card" onclick="showPage('page-game')">
+      <span class="card-time">16:00 – 16:45</span>
       <span class="card-emoji">⭐</span>
       <div class="card-title">Pin a Star</div>
       <p class="card-desc" data-i18n="pinStarCardDesc"></p>
       <span class="card-btn card-btn-purple" data-i18n="cardPlay"></span>
     </div>
     <div class="game-card" onclick="showPage('page-mission')">
+      <span class="card-time">16:45 – 17:30</span>
       <span class="card-emoji">🔭🌌</span>
       <div class="card-title" data-i18n="missionCardTitle"></div>
       <p class="card-desc" data-i18n="missionCardDesc"></p>
       <span class="card-btn card-btn-amber" data-i18n="cardPlay"></span>
     </div>
     <div class="game-card" onclick="showPage('page-dance')">
+      <span class="card-time">17:30 – 18:00</span>
       <span class="card-emoji">🕺</span>
       <div class="card-title" data-i18n="danceCardTitle"></div>
       <p class="card-desc" data-i18n="danceCardDesc"></p>
       <span class="card-btn card-btn-cyan" data-i18n="cardPlay"></span>
     </div>
     <div class="game-card" onclick="showPage('page-dinner')">
+      <span class="card-time">18:00 – 19:00</span>
       <span class="card-emoji">🍔🍕</span>
       <div class="card-title" data-i18n="dinnerCardTitle"></div>
       <p class="card-desc" data-i18n="dinnerCardDesc"></p>
