@@ -611,14 +611,16 @@
 
     /* Game selection cards */
     .game-cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 18px;
       position: relative; z-index: 1;
-      max-width: 620px;
+      max-width: 960px;
       width: 100%;
     }
     .game-card {
+      flex: 0 1 270px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(167,139,250,0.25);
       border-radius: 20px;
@@ -667,6 +669,7 @@
     .card-btn-gold   { background: linear-gradient(135deg, #fbbf24, #f97316); color: #050a1a; }
     .card-btn-cyan   { background: linear-gradient(135deg, #60d8ff, #34d399); color: #050a1a; }
     .card-btn-pink   { background: linear-gradient(135deg, #ff6ec7, #ff9a3c); color: #050a1a; }
+    .card-btn-amber  { background: linear-gradient(135deg, #fbbf24, #84cc16); color: #050a1a; }
 
     /* ── DJ Capybara page ── */
     #page-djcap {
@@ -847,6 +850,81 @@
     .btn-cake-home { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
     .btn-cake-next { background: linear-gradient(135deg, #ff6ec7, #ff9a3c); color: #050a1a; }
 
+    /* ── Mission page ── */
+    #page-mission {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 56px 20px 24px;
+      text-align: center;
+      gap: 10px;
+    }
+    .mission-home-btn {
+      position: fixed; top: 14px; left: 16px; z-index: 50;
+      padding: 6px 14px; border-radius: 50px;
+      border: 1px solid rgba(167,139,250,0.3);
+      background: rgba(255,255,255,0.07); color: #a78bfa;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .mission-home-btn:hover { background: rgba(167,139,250,0.2); }
+    .mission-page-title {
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      font-weight: 900; letter-spacing: 3px; text-transform: uppercase;
+      background: linear-gradient(135deg, #fbbf24, #84cc16, #60d8ff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 2px;
+    }
+    .mission-page-sub {
+      font-size: 0.95rem; color: #94a3b8; max-width: 560px;
+      line-height: 1.5; margin-bottom: 8px;
+    }
+    .mission-step { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .mission-cards-row {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 16px; width: 100%; max-width: 1060px;
+    }
+    .mission-card {
+      flex: 0 1 290px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 18px; padding: 22px 20px;
+      text-align: left; backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .mission-card-amber { border-color: rgba(251,191,36,0.5); }
+    .mission-card-red   { border-color: rgba(248,113,113,0.5); }
+    .mission-card-purple{ border-color: rgba(167,139,250,0.5); }
+    .mission-card-green { border-color: rgba(132,204,22,0.5); }
+    .mission-card-gold  {
+      border-color: rgba(251,191,36,0.7);
+      background: rgba(251,191,36,0.07);
+    }
+    .mc-badge { font-size: 2rem; margin-bottom: 8px; }
+    .mc-title {
+      font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: #e8eaf6; margin-bottom: 10px;
+    }
+    .mission-card-amber .mc-title { color: #fbbf24; }
+    .mission-card-red   .mc-title { color: #f87171; }
+    .mission-card-purple .mc-title { color: #a78bfa; }
+    .mission-card-green .mc-title { color: #84cc16; }
+    .mission-card-gold  .mc-title { color: #fbbf24; }
+    .mc-body { font-size: 0.92rem; color: #cbd5e1; line-height: 1.5; }
+    .mission-nav {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    }
+    .mission-nav button {
+      padding: 11px 24px; border-radius: 50px; border: none;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .mission-nav button:hover { transform: scale(1.05); }
+    .btn-mission-home   { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
+    .btn-mission-reveal { background: linear-gradient(135deg, #fbbf24, #84cc16); color: #050a1a; }
+    .btn-mission-back   { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
+    .btn-mission-next   { background: linear-gradient(135deg, #60d8ff, #a78bfa); color: #050a1a; }
+
     /* ── Dance page ── */
     #page-dance {
       display: flex;
@@ -971,6 +1049,12 @@
       <p class="card-desc" data-i18n="pinStarCardDesc"></p>
       <span class="card-btn card-btn-purple" data-i18n="cardPlay"></span>
     </div>
+    <div class="game-card" onclick="showPage('page-mission')">
+      <span class="card-emoji">🔭🌌</span>
+      <div class="card-title" data-i18n="missionCardTitle"></div>
+      <p class="card-desc" data-i18n="missionCardDesc"></p>
+      <span class="card-btn card-btn-amber" data-i18n="cardPlay"></span>
+    </div>
     <div class="game-card" onclick="showPage('page-dance')">
       <span class="card-emoji">🕺</span>
       <div class="card-title" data-i18n="danceCardTitle"></div>
@@ -1080,7 +1164,61 @@
   </div>
 </div>
 
-<!-- ══ PAGE 4: Dance Moves ══ -->
+<!-- ══ PAGE 5: Mission Kontrolle ══ -->
+<div id="page-mission" class="page-screen hidden-right">
+  <button class="mission-home-btn" onclick="showPage('page-welcome')" data-i18n="homeBtn"></button>
+
+  <h1 class="mission-page-title" data-i18n="missionPageTitle"></h1>
+  <p class="mission-page-sub" data-i18n="missionPageSubtitle"></p>
+
+  <!-- Step 1: Missions 1 & 2 -->
+  <div id="mission-step1" class="mission-step">
+    <div class="mission-cards-row">
+      <div class="mission-card mission-card-amber">
+        <div class="mc-badge">🚀</div>
+        <h2 class="mc-title" data-i18n="mission1Title"></h2>
+        <p class="mc-body" data-i18n="mission1Task"></p>
+      </div>
+      <div class="mission-card mission-card-red">
+        <div class="mc-badge">🔴</div>
+        <h2 class="mc-title" data-i18n="hint2Title"></h2>
+        <p class="mc-body" data-i18n="hint2Text"></p>
+      </div>
+      <div class="mission-card mission-card-purple">
+        <div class="mc-badge">🧩</div>
+        <h2 class="mc-title" data-i18n="mission2Title"></h2>
+        <p class="mc-body" data-i18n="mission2Task"></p>
+      </div>
+    </div>
+    <div class="mission-nav">
+      <button class="btn-mission-home" onclick="showPage('page-welcome')" data-i18n="homeBtn"></button>
+      <button class="btn-mission-reveal" onclick="showMissionStep(2)" data-i18n="missionRevealBtn"></button>
+    </div>
+  </div>
+
+  <!-- Step 2: Final mission + treasure -->
+  <div id="mission-step2" class="mission-step" style="display:none">
+    <div class="mission-cards-row mission-cards-center">
+      <div class="mission-card mission-card-green">
+        <div class="mc-badge">👽</div>
+        <h2 class="mc-title" data-i18n="hint3Title"></h2>
+        <p class="mc-body" data-i18n="hint3Text"></p>
+      </div>
+      <div class="mission-card mission-card-gold">
+        <div class="mc-badge">🌟</div>
+        <h2 class="mc-title" data-i18n="treasureTitle"></h2>
+        <p class="mc-body" data-i18n="treasureText"></p>
+      </div>
+    </div>
+    <div class="mission-nav">
+      <button class="btn-mission-home" onclick="showPage('page-welcome')" data-i18n="homeBtn"></button>
+      <button class="btn-mission-back" onclick="showMissionStep(1)" data-i18n="missionBackBtn"></button>
+      <button class="btn-mission-next" onclick="showPage('page-dance')" data-i18n="missionNext"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 6: Dance Moves ══ -->
 <div id="page-dance" class="page-screen hidden-right">
   <button id="home-btn-dance" onclick="showPage('page-welcome')" data-i18n="homeBtn"></button>
 
@@ -1204,6 +1342,23 @@ const TRANSLATIONS = {
     cakeStep3:      'Isha makes a secret wish and blows out the candles 🕯️',
     cakeStep4:      'Houston, we have cake! Everyone enjoy a slice! 🍰',
     cakeNext:       'Pin a Star →',
+    missionCardTitle:  'Mission Control',
+    missionCardDesc:   'Find the hidden star crystal — save the galaxy!',
+    missionPageTitle:  '🌌 Mission Control',
+    missionPageSubtitle: 'An alien stole the star crystal and hid it in the garden. Only you can save the galaxy! Complete all 3 missions!',
+    mission1Title:  'Mission 1 – Rocket Launch 🚀',
+    mission1Task:   'Astronauts, head to the launch ramp! Slide down and shout loud: "3… 2… 1… LAUNCH!"',
+    hint2Title:     'Hint 2 🔴',
+    hint2Text:      'Well done, Space Crew! Now travel to the red space station. A secret space puzzle awaits you there.',
+    mission2Title:  'Mission 2 – Space Puzzle 🧩',
+    mission2Task:   'Solve the space puzzle together at the red space station. Only then can you find the star crystal!',
+    hint3Title:     'Hint 3 👽',
+    hint3Text:      'Alien Alert! The alien was spotted on the garden planet. All teams — search for the hidden star crystal now!',
+    treasureTitle:  'Mission Successful! 🌟',
+    treasureText:   'You saved the galaxy and found the star crystal! Well done, Space Crew!',
+    missionRevealBtn: '👽 Reveal Final Mission →',
+    missionBackBtn:   '← Back',
+    missionNext:    'Dance Moves →',
     danceCardTitle: 'Dance Moves',
     danceCardDesc:  'Show off your best zero-gravity dance moves!',
     danceTitle:     'The Coolest Zero-Gravity Dance Moves',
@@ -1259,6 +1414,23 @@ const TRANSLATIONS = {
     cakeStep3:      'Isha wünscht sich etwas und pustet die Kerzen aus 🕯️',
     cakeStep4:      'Houston, wir haben Kuchen! Alle dürfen ein Stück nehmen! 🍰',
     cakeNext:       'Stern anpinnen →',
+    missionCardTitle:  'Mission Kontrolle',
+    missionCardDesc:   'Findet den Sternenkristall und rettet die Galaxie!',
+    missionPageTitle:  '🌌 Mission Kontrolle',
+    missionPageSubtitle: 'Ein Alien hat den Sternenkristall gestohlen und im Garten versteckt. Nur ihr könnt die Galaxie retten! Löst alle 3 Missionen!',
+    mission1Title:  'Mission 1 – Raketenstart 🚀',
+    mission1Task:   'Astronauten, begebt euch zur Raketenrampe! Rutscht die Rutsche hinunter und ruft laut: „3… 2… 1… START!"',
+    hint2Title:     'Hinweis 2 🔴',
+    hint2Text:      'Gut gemacht, Space Crew! Jetzt müsst ihr zur roten Raumstation reisen. Dort wartet ein geheimes Weltraum-Rätsel auf euch.',
+    mission2Title:  'Mission 2 – Weltraum-Rätsel 🧩',
+    mission2Task:   'Löst gemeinsam das Weltraum-Rätsel an der roten Raumstation. Erst danach könnt ihr den Sternenkristall finden!',
+    hint3Title:     'Hinweis 3 👽',
+    hint3Text:      'Alien-Alarm! Das Alien wurde auf dem Gartenplaneten gesehen. Alle Teams — sucht jetzt den versteckten Sternenkristall!',
+    treasureTitle:  'Mission Erfolgreich! 🌟',
+    treasureText:   'Ihr habt die Galaxie gerettet und den Sternenkristall gefunden! Gut gemacht, Space Crew!',
+    missionRevealBtn: '👽 Letzte Mission enthüllen →',
+    missionBackBtn:   '← Zurück',
+    missionNext:    'Tanzmoves →',
     danceCardTitle: 'Tanzmoves',
     danceCardDesc:  'Zeigt eure besten Schwerelosigkeits-Tanzmoves!',
     danceTitle:     'Coolsten Schwerelosigkeits Tanzmoves',
@@ -1777,7 +1949,12 @@ function checkPassword() {
 }
 
 // ─── Page navigation ──────────────────────────────────────────────────────────
-const PAGE_ORDER = ['page-welcome', 'page-djcap', 'page-cake', 'page-game', 'page-dance'];
+const PAGE_ORDER = ['page-welcome', 'page-djcap', 'page-cake', 'page-game', 'page-mission', 'page-dance'];
+
+function showMissionStep(n) {
+  document.getElementById('mission-step1').style.display = n === 1 ? 'flex' : 'none';
+  document.getElementById('mission-step2').style.display = n === 2 ? 'flex' : 'none';
+}
 
 function showPage(toId) {
   const fromEl = PAGE_ORDER.map(id => document.getElementById(id))
@@ -1793,6 +1970,7 @@ function showPage(toId) {
       el.classList.add(idx < toIdx ? 'hidden-left' : 'hidden-right');
     }
   });
+  if (toId === 'page-mission') showMissionStep(1);
 }
 
 document.getElementById('home-btn').addEventListener('click', () => showPage('page-welcome'));
