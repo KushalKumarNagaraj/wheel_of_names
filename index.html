@@ -1735,12 +1735,21 @@ function spin() {
   const ishaIdx = firstSpin ? names.findIndex(n => n.name === 'Isha') : -1;
   firstSpin = false;
 
+  // If Ivaan is on the wheel but not the last name, pick someone else
+  const ivaanIdx = names.findIndex(n => n.name === 'Ivaan');
+  const mustAvoidIvaan = ivaanIdx !== -1 && names.length > 1;
+
   let totalAngle;
   if (ishaIdx !== -1) {
-    // Deterministically land on Isha: calculate the exact angle so the pointer
-    // (at 0°) sits at the centre of Isha's segment after 7 full rotations.
     const slice = (Math.PI * 2) / names.length;
     const targetFinal = -(ishaIdx * slice + slice / 2);
+    totalAngle = targetFinal - currentAngle + 7 * Math.PI * 2;
+  } else if (mustAvoidIvaan) {
+    // Pick a random index that is not Ivaan
+    const candidates = names.map((_, i) => i).filter(i => i !== ivaanIdx);
+    const targetIdx = candidates[Math.floor(Math.random() * candidates.length)];
+    const slice = (Math.PI * 2) / names.length;
+    const targetFinal = -(targetIdx * slice + slice / 2);
     totalAngle = targetFinal - currentAngle + 7 * Math.PI * 2;
   } else {
     const extraSpins = 5 + Math.random() * 5;
