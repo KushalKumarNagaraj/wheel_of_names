@@ -588,7 +588,7 @@
       font-size: clamp(0.9rem, 2.5vw, 1.1rem);
       color: #94a3b8;
       margin-top: 4px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       position: relative; z-index: 1;
     }
     .welcome-kids {
@@ -597,7 +597,7 @@
       justify-content: center;
       gap: 8px;
       max-width: 520px;
-      margin-bottom: 20px;
+      margin-bottom: 28px;
       position: relative; z-index: 1;
     }
     .welcome-kids span {
@@ -608,28 +608,158 @@
       font-size: 0.9rem;
       color: #c4b5fd;
     }
-    #start-btn {
-      padding: 18px 52px;
-      font-size: 1.3rem;
+
+    /* Game selection cards */
+    .game-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      position: relative; z-index: 1;
+      max-width: 700px;
+    }
+    .game-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 20px;
+      padding: 28px 24px;
+      width: 280px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    .game-card:hover {
+      transform: translateY(-6px);
+      border-color: #a78bfa;
+      box-shadow: 0 12px 32px rgba(167,139,250,0.3);
+    }
+    .game-card .card-emoji { font-size: 3.2rem; margin-bottom: 10px; display: block; }
+    .game-card .card-title {
+      font-size: 1.2rem;
       font-weight: 900;
       letter-spacing: 2px;
       text-transform: uppercase;
-      background: linear-gradient(135deg, #a78bfa, #60d8ff);
-      border: none;
-      border-radius: 50px;
-      color: #050a1a;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 6px 28px rgba(167,139,250,0.5);
-      position: relative; z-index: 1;
+      background: linear-gradient(135deg, #ff6ec7, #a78bfa, #60d8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
     }
-    #start-btn:hover { transform: scale(1.07); box-shadow: 0 8px 36px rgba(167,139,250,0.7); }
+    .game-card .card-desc {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .game-card .card-btn {
+      display: inline-block;
+      padding: 9px 24px;
+      border-radius: 50px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s;
+      pointer-events: none;
+    }
+    .game-card:hover .card-btn { transform: scale(1.05); }
+    .card-btn-purple { background: linear-gradient(135deg, #a78bfa, #60d8ff); color: #050a1a; }
+    .card-btn-gold   { background: linear-gradient(135deg, #fbbf24, #f97316); color: #050a1a; }
+
+    /* ── DJ Capybara page ── */
+    #page-djcap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 70px 20px 60px;
+      text-align: center;
+    }
+    .djcap-emoji { font-size: 6rem; margin-bottom: 8px; animation: float 3s ease-in-out infinite; display: block; }
+    .djcap-title {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #fbbf24, #f97316, #ff6ec7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+    .djcap-music { font-size: 1.4rem; margin-bottom: 28px; opacity: 0.7; }
+    .djcap-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(251,191,36,0.25);
+      border-radius: 20px;
+      padding: 28px 32px;
+      max-width: 560px;
+      width: 100%;
+      margin-bottom: 24px;
+      text-align: left;
+      backdrop-filter: blur(8px);
+    }
+    .djcap-card h2 {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #fbbf24;
+      margin-bottom: 12px;
+    }
+    .djcap-card p {
+      font-size: 1rem;
+      color: #e8eaf6;
+      line-height: 1.7;
+    }
+    .djcap-instructions { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .djcap-instructions li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 1rem;
+      color: #e8eaf6;
+      line-height: 1.5;
+    }
+    .djcap-instructions li .step-num {
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      color: #050a1a;
+      font-weight: 900;
+      font-size: 0.85rem;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .djcap-nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .djcap-nav button {
+      padding: 12px 28px;
+      border-radius: 50px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .djcap-nav button:hover { transform: scale(1.05); }
+    .btn-djcap-home { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
+    .btn-djcap-next { background: linear-gradient(135deg, #a78bfa, #60d8ff); color: #050a1a; }
 
     /* ── Game page ── */
     #page-game { z-index: 1; }
     #page-game.hidden-right { z-index: 1; }
 
-    #home-btn {
+    #home-btn, #home-btn-djcap {
       position: fixed;
       top: 14px;
       left: 16px;
@@ -644,7 +774,7 @@
       cursor: pointer;
       transition: background 0.15s;
     }
-    #home-btn:hover { background: rgba(167,139,250,0.2); }
+    #home-btn:hover, #home-btn-djcap:hover { background: rgba(167,139,250,0.2); }
   </style>
 </head>
 <body>
@@ -664,15 +794,56 @@
 
   <p class="welcome-birthday" data-i18n="birthday"></p>
   <h1 class="welcome-title" data-i18n="welcomeTitle"></h1>
-  <p class="welcome-game-name">⭐ Pin a Star ⭐</p>
   <p class="welcome-tagline" data-i18n="welcomeTagline"></p>
-
   <div class="welcome-kids" id="welcome-kids"></div>
 
-  <button id="start-btn" data-i18n="startBtn"></button>
+  <div class="game-cards">
+    <div class="game-card" onclick="showPage('page-djcap')">
+      <span class="card-emoji">🦫</span>
+      <div class="card-title">DJ Capybara</div>
+      <p class="card-desc" data-i18n="djcapCardDesc"></p>
+      <span class="card-btn card-btn-gold" data-i18n="cardPlay"></span>
+    </div>
+    <div class="game-card" onclick="showPage('page-game')">
+      <span class="card-emoji">⭐</span>
+      <div class="card-title">Pin a Star</div>
+      <p class="card-desc" data-i18n="pinStarCardDesc"></p>
+      <span class="card-btn card-btn-purple" data-i18n="cardPlay"></span>
+    </div>
+  </div>
 </div>
 
-<!-- ══ PAGE 2: Game ══ -->
+<!-- ══ PAGE 2: DJ Capybara ══ -->
+<div id="page-djcap" class="page-screen hidden-right">
+  <button id="home-btn-djcap" class="home-btn-shared" data-i18n="homeBtn"></button>
+
+  <span class="djcap-emoji">🦫</span>
+  <h1 class="djcap-title">DJ Capybara</h1>
+  <p class="djcap-music">🎵 🎶 🎵</p>
+
+  <div class="djcap-card">
+    <h2 data-i18n="djcapDescTitle"></h2>
+    <p data-i18n="djcapDesc"></p>
+  </div>
+
+  <div class="djcap-card">
+    <h2 data-i18n="djcapInstrTitle"></h2>
+    <ol class="djcap-instructions">
+      <li><span class="step-num">1</span><span data-i18n="djcapStep1"></span></li>
+      <li><span class="step-num">2</span><span data-i18n="djcapStep2"></span></li>
+      <li><span class="step-num">3</span><span data-i18n="djcapStep3"></span></li>
+      <li><span class="step-num">4</span><span data-i18n="djcapStep4"></span></li>
+      <li><span class="step-num">5</span><span data-i18n="djcapStep5"></span></li>
+    </ol>
+  </div>
+
+  <div class="djcap-nav">
+    <button class="btn-djcap-home" onclick="showPage('page-welcome')" data-i18n="homeBtn"></button>
+    <button class="btn-djcap-next" onclick="showPage('page-game')"    data-i18n="nextGame"></button>
+  </div>
+</div>
+
+<!-- ══ PAGE 3: Pin a Star ══ -->
 <div id="page-game" class="page-screen hidden-right">
   <button id="home-btn" data-i18n="homeBtn"></button>
 
@@ -792,10 +963,21 @@ const TRANSLATIONS = {
     pwOk:          'Confirm',
     pwCancel:      'Cancel',
     pwWrong:       'Wrong password',
-    welcomeTitle:  'Welcome, Space Explorers!',
-    welcomeTagline:'Spin the wheel to see who goes first!',
-    startBtn:      '🚀 Let\'s Play!',
-    homeBtn:       '← Home',
+    welcomeTitle:   'Welcome, Space Explorers!',
+    welcomeTagline: 'Choose a game to play!',
+    homeBtn:        '← Home',
+    cardPlay:       'Play →',
+    djcapCardDesc:  'Pass the capybara while the music plays!',
+    pinStarCardDesc:'Spin the wheel and pin your star!',
+    djcapDescTitle: 'How to play',
+    djcapDesc:      'Pass the capybara while the music plays! When the music stops, the person holding the capybara gets to give their gift to the birthday child.',
+    djcapInstrTitle:'Instructions',
+    djcapStep1:     'Sit in a circle.',
+    djcapStep2:     'Pass DJ Capybara while the music is playing.',
+    djcapStep3:     'When the music stops, hold onto DJ Capybara.',
+    djcapStep4:     'If you have DJ Capybara, grab your gift and present it to the birthday child.',
+    djcapStep5:     'Keep playing until all gifts are opened!',
+    nextGame:       'Pin a Star →',
   },
   de: {
     birthday:      '🎂 Ishas 9. Geburtstag 🎂',
@@ -823,10 +1005,21 @@ const TRANSLATIONS = {
     pwOk:          'Bestätigen',
     pwCancel:      'Abbrechen',
     pwWrong:       'Falsches Passwort',
-    welcomeTitle:  'Willkommen, Weltraum-Entdecker!',
-    welcomeTagline:'Dreht das Rad und seht, wer anfängt!',
-    startBtn:      '🚀 Los geht\'s!',
-    homeBtn:       '← Startseite',
+    welcomeTitle:   'Willkommen, Weltraum-Entdecker!',
+    welcomeTagline: 'Wählt ein Spiel!',
+    homeBtn:        '← Startseite',
+    cardPlay:       'Spielen →',
+    djcapCardDesc:  'Gebt den Capybara weiter, solange die Musik spielt!',
+    pinStarCardDesc:'Dreht das Rad und pinnt euren Stern!',
+    djcapDescTitle: 'Spielbeschreibung',
+    djcapDesc:      'Gebt den Capybara weiter, solange die Musik spielt! Wenn die Musik stoppt, darf die Person, die den Capybara hält, ihr Geschenk dem Geburtstagskind überreichen.',
+    djcapInstrTitle:'Anleitung',
+    djcapStep1:     'Setzt euch in einen Kreis.',
+    djcapStep2:     'Gebt DJ Capybara weiter, solange die Musik spielt.',
+    djcapStep3:     'Wenn die Musik stoppt, haltet DJ Capybara fest.',
+    djcapStep4:     'Wenn du DJ Capybara hast, nimm dein Geschenk und überreiche es dem Geburtstagskind.',
+    djcapStep5:     'Spielt weiter, bis alle Geschenke geöffnet sind!',
+    nextGame:       'Stern anpinnen →',
   },
 };
 
@@ -1341,24 +1534,25 @@ function checkPassword() {
 }
 
 // ─── Page navigation ──────────────────────────────────────────────────────────
-function showPage(id) {
-  const welcome = document.getElementById('page-welcome');
-  const game    = document.getElementById('page-game');
-  if (id === 'game') {
-    welcome.classList.add('hidden-left');
-    welcome.classList.remove('hidden-right');
-    game.classList.remove('hidden-right');
-    game.classList.remove('hidden-left');
-  } else {
-    game.classList.add('hidden-right');
-    game.classList.remove('hidden-left');
-    welcome.classList.remove('hidden-left');
-    welcome.classList.remove('hidden-right');
-  }
+const PAGE_ORDER = ['page-welcome', 'page-djcap', 'page-game'];
+
+function showPage(toId) {
+  const fromEl = PAGE_ORDER.map(id => document.getElementById(id))
+    .find(el => !el.classList.contains('hidden-right') && !el.classList.contains('hidden-left'));
+  const fromIdx = PAGE_ORDER.indexOf(fromEl ? fromEl.id : 'page-welcome');
+  const toIdx   = PAGE_ORDER.indexOf(toId);
+  const forward = toIdx >= fromIdx;
+
+  PAGE_ORDER.forEach((id, idx) => {
+    const el = document.getElementById(id);
+    el.classList.remove('hidden-left', 'hidden-right');
+    if (id !== toId) {
+      el.classList.add(idx < toIdx ? 'hidden-left' : 'hidden-right');
+    }
+  });
 }
 
-document.getElementById('start-btn').addEventListener('click', () => showPage('game'));
-document.getElementById('home-btn').addEventListener('click',  () => showPage('welcome'));
+document.getElementById('home-btn').addEventListener('click', () => showPage('page-welcome'));
 
 // ─── Welcome page decorations ─────────────────────────────────────────────────
 function buildWelcome() {
