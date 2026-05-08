@@ -1399,6 +1399,8 @@ const TRANSLATIONS = {
     ishaTitle:     '⭐ The Birthday Star! ⭐',
     ishaMsg1:      'Happy Birthday, Chief Astronaut! 🚀 The galaxy is yours!',
     ishaMsg2:      'The Birthday Star gets to pin first! ⭐',
+    ivaanTitle:    '🚀 Little Brother of the Star!',
+    ivaanMsg1:     'Well done, Co-Pilot Ivaan! You held on until the very end! 🛸',
     spin:          'Spin!',
     emptyNote:     'Add names to spin the wheel',
     panelNames:    'Names on the wheel',
@@ -1478,6 +1480,8 @@ const TRANSLATIONS = {
     ishaTitle:     '⭐ The Birthday Star! ⭐',
     ishaMsg1:      'Alles Gute zum Geburtstag, Chef-Astronautin! 🚀 Die Galaxie gehört dir!',
     ishaMsg2:      'Der Geburtstagsstar darf als Erstes pinnen! ⭐',
+    ivaanTitle:    '🚀 Der kleine Bruder des Stars!',
+    ivaanMsg1:     'Gut gemacht, Co-Pilot Ivaan! Du hast bis zum Ende durchgehalten! 🛸',
     spin:          'Drehen!',
     emptyNote:     'Namen hinzufügen, um das Rad zu drehen',
     panelNames:    'Namen auf dem Rad',
@@ -1782,11 +1786,12 @@ function spin() {
 function showWinner() {
   const idx = getWinnerIndex();
   pendingWinner = idx;
-  const isIsha = names[idx].name === 'Isha';
+  const isIsha  = names[idx].name === 'Isha';
+  const isIvaan = names[idx].name === 'Ivaan';
 
   document.getElementById('winner-name-text').textContent = names[idx].name;
-  document.getElementById('modal-title').textContent = isIsha ? t('ishaTitle') : t('modalTitle');
-  document.getElementById('modal-msg').textContent   = isIsha ? t('ishaMsg1')  : t('modalQuestion');
+  document.getElementById('modal-title').textContent = isIsha ? t('ishaTitle') : isIvaan ? t('ivaanTitle') : t('modalTitle');
+  document.getElementById('modal-msg').textContent   = isIsha ? t('ishaMsg1')  : isIvaan ? t('ivaanMsg1') : t('modalQuestion');
   const msg2 = document.getElementById('modal-msg2');
   msg2.textContent   = isIsha ? t('ishaMsg2') : '';
   msg2.style.display = isIsha ? 'block' : 'none';
