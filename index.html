@@ -1754,7 +1754,8 @@ function spin() {
     const targetIdx = candidates[Math.floor(Math.random() * candidates.length)];
     const slice = (Math.PI * 2) / names.length;
     const targetFinal = -(targetIdx * slice + slice / 2);
-    totalAngle = targetFinal - currentAngle + 7 * Math.PI * 2;
+    const normCurrent = ((currentAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+    totalAngle = targetFinal - normCurrent + 7 * Math.PI * 2;
   } else {
     const extraSpins = 5 + Math.random() * 5;
     const extraAngle = Math.random() * Math.PI * 2;
