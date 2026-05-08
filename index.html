@@ -612,10 +612,10 @@
     /* Game selection cards */
     .game-cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
       position: relative; z-index: 1;
-      max-width: 820px;
+      max-width: 620px;
       width: 100%;
     }
     .game-card {
@@ -666,6 +666,7 @@
     .card-btn-purple { background: linear-gradient(135deg, #a78bfa, #60d8ff); color: #050a1a; }
     .card-btn-gold   { background: linear-gradient(135deg, #fbbf24, #f97316); color: #050a1a; }
     .card-btn-cyan   { background: linear-gradient(135deg, #60d8ff, #34d399); color: #050a1a; }
+    .card-btn-pink   { background: linear-gradient(135deg, #ff6ec7, #ff9a3c); color: #050a1a; }
 
     /* ── DJ Capybara page ── */
     #page-djcap {
@@ -762,6 +763,89 @@
     .djcap-nav button:hover { transform: scale(1.05); }
     .btn-djcap-home { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
     .btn-djcap-next { background: linear-gradient(135deg, #a78bfa, #60d8ff); color: #050a1a; }
+
+    /* ── Cake page ── */
+    #page-cake {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 56px 20px 24px;
+      text-align: center;
+    }
+    .cake-emoji { font-size: 3.8rem; margin-bottom: 4px; display: block; }
+    .cake-title {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ff6ec7, #ff9a3c, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      max-width: 600px;
+      line-height: 1.2;
+    }
+    .cake-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,110,199,0.3);
+      border-radius: 20px;
+      padding: 24px 36px;
+      max-width: 560px;
+      width: 100%;
+      text-align: left;
+      backdrop-filter: blur(8px);
+      margin-bottom: 20px;
+    }
+    .cake-card h2 {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #ff6ec7;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .cake-steps { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .cake-steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+    .cake-step-num {
+      background: linear-gradient(135deg, #ff6ec7, #ff9a3c);
+      color: #050a1a;
+      font-weight: 900;
+      font-size: 0.8rem;
+      min-width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .cake-nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cake-nav button {
+      padding: 12px 28px;
+      border-radius: 50px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .cake-nav button:hover { transform: scale(1.05); }
+    .btn-cake-home { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
+    .btn-cake-next { background: linear-gradient(135deg, #ff6ec7, #ff9a3c); color: #050a1a; }
 
     /* ── Dance page ── */
     #page-dance {
@@ -875,6 +959,12 @@
       <p class="card-desc" data-i18n="djcapCardDesc"></p>
       <span class="card-btn card-btn-gold" data-i18n="cardPlay"></span>
     </div>
+    <div class="game-card" onclick="showPage('page-cake')">
+      <span class="card-emoji">🎂🚀</span>
+      <div class="card-title" data-i18n="cakeCardTitle"></div>
+      <p class="card-desc" data-i18n="cakeCardDesc"></p>
+      <span class="card-btn card-btn-pink" data-i18n="cardPlay"></span>
+    </div>
     <div class="game-card" onclick="showPage('page-game')">
       <span class="card-emoji">⭐</span>
       <div class="card-title">Pin a Star</div>
@@ -918,11 +1008,33 @@
 
   <div class="djcap-nav">
     <button class="btn-djcap-home" onclick="showPage('page-welcome')" data-i18n="homeBtn"></button>
-    <button class="btn-djcap-next" onclick="showPage('page-game')"    data-i18n="nextGame"></button>
+    <button class="btn-djcap-next" onclick="showPage('page-cake')"   data-i18n="nextGame"></button>
   </div>
 </div>
 
-<!-- ══ PAGE 3: Pin a Star ══ -->
+<!-- ══ PAGE 3: Cake Time ══ -->
+<div id="page-cake" class="page-screen hidden-right">
+
+  <span class="cake-emoji">🎂🚀</span>
+  <h1 class="cake-title" data-i18n="cakeTitle"></h1>
+
+  <div class="cake-card">
+    <h2 data-i18n="cakeSectionTitle"></h2>
+    <ol class="cake-steps">
+      <li><span class="cake-step-num">1</span><span data-i18n="cakeStep1"></span></li>
+      <li><span class="cake-step-num">2</span><span data-i18n="cakeStep2"></span></li>
+      <li><span class="cake-step-num">3</span><span data-i18n="cakeStep3"></span></li>
+      <li><span class="cake-step-num">4</span><span data-i18n="cakeStep4"></span></li>
+    </ol>
+  </div>
+
+  <div class="cake-nav">
+    <button class="btn-cake-home" onclick="showPage('page-welcome')" data-i18n="homeBtn"></button>
+    <button class="btn-cake-next" onclick="showPage('page-game')" data-i18n="cakeNext"></button>
+  </div>
+</div>
+
+<!-- ══ PAGE 4: Pin a Star ══ -->
 <div id="page-game" class="page-screen hidden-right">
   <button id="home-btn" data-i18n="homeBtn"></button>
 
@@ -1082,7 +1194,16 @@ const TRANSLATIONS = {
     djcapStep3:     'When the music stops, hold onto DJ Capybara.',
     djcapStep4:     'If you have DJ Capybara, grab your gift and present it to Isha.',
     djcapStep5:     'Keep playing until all gifts are opened!',
-    nextGame:       'Pin a Star →',
+    nextGame:       'Cake Time →',
+    cakeCardTitle:  'Cake Time',
+    cakeCardDesc:   'Houston, we have a birthday cake!',
+    cakeTitle:      'Mission: Cake Time! 🎂🚀',
+    cakeSectionTitle: '🕯️ Astronaut Cake Ceremony',
+    cakeStep1:      'Gather around the cosmic birthday cake 🎂',
+    cakeStep2:      'Sing Happy Birthday to Isha! 🎵',
+    cakeStep3:      'Isha makes a secret wish and blows out the candles 🕯️',
+    cakeStep4:      'Houston, we have cake! Everyone enjoy a slice! 🍰',
+    cakeNext:       'Pin a Star →',
     danceCardTitle: 'Dance Moves',
     danceCardDesc:  'Show off your best zero-gravity dance moves!',
     danceTitle:     'The Coolest Zero-Gravity Dance Moves',
@@ -1128,7 +1249,16 @@ const TRANSLATIONS = {
     djcapStep3:     'Wenn die Musik stoppt, haltet DJ Capybara fest.',
     djcapStep4:     'Wenn du DJ Capybara hast, nimm dein Geschenk und überreiche es dem Isha.',
     djcapStep5:     'Spielt weiter, bis alle Geschenke geöffnet sind!',
-    nextGame:       'Stern anpinnen →',
+    nextGame:       'Kuchenzeit →',
+    cakeCardTitle:  'Kuchenzeit',
+    cakeCardDesc:   'Houston, wir haben eine Geburtstagstorte!',
+    cakeTitle:      'Mission: Kuchenzeit! 🎂🚀',
+    cakeSectionTitle: '🕯️ Astronauten-Kuchenzeremonie',
+    cakeStep1:      'Versammelt euch um die kosmische Geburtstagstorte 🎂',
+    cakeStep2:      'Singt Happy Birthday für Isha! 🎵',
+    cakeStep3:      'Isha wünscht sich etwas und pustet die Kerzen aus 🕯️',
+    cakeStep4:      'Houston, wir haben Kuchen! Alle dürfen ein Stück nehmen! 🍰',
+    cakeNext:       'Stern anpinnen →',
     danceCardTitle: 'Tanzmoves',
     danceCardDesc:  'Zeigt eure besten Schwerelosigkeits-Tanzmoves!',
     danceTitle:     'Coolsten Schwerelosigkeits Tanzmoves',
@@ -1647,7 +1777,7 @@ function checkPassword() {
 }
 
 // ─── Page navigation ──────────────────────────────────────────────────────────
-const PAGE_ORDER = ['page-welcome', 'page-djcap', 'page-game', 'page-dance'];
+const PAGE_ORDER = ['page-welcome', 'page-djcap', 'page-cake', 'page-game', 'page-dance'];
 
 function showPage(toId) {
   const fromEl = PAGE_ORDER.map(id => document.getElementById(id))
