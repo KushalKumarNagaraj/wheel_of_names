@@ -621,6 +621,9 @@
     }
     .game-card {
       flex: 0 1 270px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(167,139,250,0.25);
       border-radius: 20px;
@@ -630,6 +633,7 @@
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
       backdrop-filter: blur(8px);
     }
+    .game-card .card-btn { margin-top: auto; }
     .game-card:hover {
       transform: translateY(-5px);
       border-color: #a78bfa;
