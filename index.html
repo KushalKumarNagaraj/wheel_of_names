@@ -666,6 +666,7 @@
     .game-card:hover .card-btn { transform: scale(1.05); }
     .card-btn-purple { background: linear-gradient(135deg, #a78bfa, #60d8ff); color: #050a1a; }
     .card-btn-gold   { background: linear-gradient(135deg, #fbbf24, #f97316); color: #050a1a; }
+    .card-btn-cyan   { background: linear-gradient(135deg, #60d8ff, #34d399); color: #050a1a; }
 
     /* ── DJ Capybara page ── */
     #page-djcap {
@@ -763,6 +764,67 @@
     .btn-djcap-home { background: rgba(255,255,255,0.1); color: #e8eaf6; border: 1px solid rgba(255,255,255,0.2) !important; }
     .btn-djcap-next { background: linear-gradient(135deg, #a78bfa, #60d8ff); color: #050a1a; }
 
+    /* ── Dance page ── */
+    #page-dance {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 70px 20px 60px;
+      text-align: center;
+    }
+    .dance-emoji { font-size: 4rem; margin-bottom: 8px; display: block; }
+    .dance-title {
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #60d8ff, #a78bfa, #ff6ec7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 28px;
+      max-width: 600px;
+      line-height: 1.2;
+    }
+    .song-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(96,216,255,0.25);
+      border-radius: 20px;
+      padding: 28px 32px;
+      max-width: 480px;
+      width: 100%;
+      text-align: left;
+      backdrop-filter: blur(8px);
+      margin-bottom: 28px;
+    }
+    .song-card h2 {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #60d8ff;
+      margin-bottom: 16px;
+    }
+    .song-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .song-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      font-size: 0.95rem;
+      color: #e8eaf6;
+    }
+    .song-list li .song-num {
+      color: #60d8ff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      min-width: 20px;
+      text-align: right;
+    }
+    .song-list li .song-note { font-size: 1rem; }
+
     /* ── Game page ── */
     #page-game { z-index: 1; }
     #page-game.hidden-right { z-index: 1; }
@@ -782,7 +844,8 @@
       cursor: pointer;
       transition: background 0.15s;
     }
-    #home-btn:hover, #home-btn-djcap:hover { background: rgba(167,139,250,0.2); }
+    #home-btn:hover, #home-btn-djcap:hover, #home-btn-dance:hover { background: rgba(167,139,250,0.2); }
+    #home-btn-dance { position: fixed; top: 14px; left: 16px; z-index: 50; padding: 6px 14px; border-radius: 50px; border: 1px solid rgba(167,139,250,0.3); background: rgba(255,255,255,0.07); color: #a78bfa; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: background 0.15s; }
   </style>
 </head>
 <body>
@@ -817,6 +880,12 @@
       <div class="card-title">Pin a Star</div>
       <p class="card-desc" data-i18n="pinStarCardDesc"></p>
       <span class="card-btn card-btn-purple" data-i18n="cardPlay"></span>
+    </div>
+    <div class="game-card" onclick="showPage('page-dance')">
+      <span class="card-emoji">🕺</span>
+      <div class="card-title" data-i18n="danceCardTitle"></div>
+      <p class="card-desc" data-i18n="danceCardDesc"></p>
+      <span class="card-btn card-btn-cyan" data-i18n="cardPlay"></span>
     </div>
   </div>
 </div>
@@ -896,6 +965,32 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 4: Dance Moves ══ -->
+<div id="page-dance" class="page-screen hidden-right">
+  <button id="home-btn-dance" onclick="showPage('page-welcome')" data-i18n="homeBtn"></button>
+
+  <span class="dance-emoji">🕺💫</span>
+  <h1 class="dance-title" data-i18n="danceTitle"></h1>
+
+  <div class="song-card">
+    <h2 data-i18n="dancePlaylist"></h2>
+    <ul class="song-list">
+      <li><span class="song-num">1</span><span class="song-note">🎵</span>Astronaut In The Ocean</li>
+      <li><span class="song-num">2</span><span class="song-note">🎵</span>Astronomia</li>
+      <li><span class="song-num">3</span><span class="song-note">🎵</span>Chicken Banana</li>
+      <li><span class="song-num">4</span><span class="song-note">🎵</span>Dance Monkey</li>
+      <li><span class="song-num">5</span><span class="song-note">🎵</span>Sapphire</li>
+      <li><span class="song-num">6</span><span class="song-note">🎵</span>Who Let The Dogs Out</li>
+      <li><span class="song-num">7</span><span class="song-note">🎵</span>Day One (Interstellar)</li>
+      <li><span class="song-num">8</span><span class="song-note">🎵</span>Faded</li>
+      <li><span class="song-num">9</span><span class="song-note">🎵</span>Waka Waka</li>
+      <li><span class="song-num">10</span><span class="song-note">🎵</span>Roller</li>
+      <li><span class="song-num">11</span><span class="song-note">🎵</span>Sigma Boy</li>
+      <li><span class="song-num">12</span><span class="song-note">🎵</span>Takedown</li>
+    </ul>
   </div>
 </div>
 
@@ -988,6 +1083,10 @@ const TRANSLATIONS = {
     djcapStep4:     'If you have DJ Capybara, grab your gift and present it to Isha.',
     djcapStep5:     'Keep playing until all gifts are opened!',
     nextGame:       'Pin a Star →',
+    danceCardTitle: 'Dance Moves',
+    danceCardDesc:  'Show off your best zero-gravity dance moves!',
+    danceTitle:     'The Coolest Zero-Gravity Dance Moves',
+    dancePlaylist:  '🎵 Playlist',
   },
   de: {
     birthday:      '🎂 Ishas 9. Geburtstag 🎂',
@@ -1030,6 +1129,10 @@ const TRANSLATIONS = {
     djcapStep4:     'Wenn du DJ Capybara hast, nimm dein Geschenk und überreiche es dem Isha.',
     djcapStep5:     'Spielt weiter, bis alle Geschenke geöffnet sind!',
     nextGame:       'Stern anpinnen →',
+    danceCardTitle: 'Tanzmoves',
+    danceCardDesc:  'Zeigt eure besten Schwerelosigkeits-Tanzmoves!',
+    danceTitle:     'Coolsten Schwerelosigkeits Tanzmoves',
+    dancePlaylist:  '🎵 Playlist',
   },
 };
 
@@ -1544,7 +1647,7 @@ function checkPassword() {
 }
 
 // ─── Page navigation ──────────────────────────────────────────────────────────
-const PAGE_ORDER = ['page-welcome', 'page-djcap', 'page-game'];
+const PAGE_ORDER = ['page-welcome', 'page-djcap', 'page-game', 'page-dance'];
 
 function showPage(toId) {
   const fromEl = PAGE_ORDER.map(id => document.getElementById(id))
