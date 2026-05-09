@@ -1706,9 +1706,10 @@ function drawWheel() {
     wctx.shadowColor = 'rgba(0,0,0,0.7)';
     wctx.shadowBlur = 3;
 
-    let label = item.name;
+    let label = item.name === 'Ivaan' ? '🦁 ' + item.name : item.name;
+    const fullLabel = label;
     while (wctx.measureText(label).width > maxW && label.length > 3) label = label.slice(0, -1);
-    if (label !== item.name) label = label.slice(0, -1) + '…';
+    if (label !== fullLabel) label = label.slice(0, -1) + '…';
 
     wctx.fillText(label, 0, 0);
     wctx.restore();
@@ -2131,7 +2132,7 @@ function buildWelcome() {
   kidsDiv.innerHTML = '';
   DEFAULT_NAMES.forEach(name => {
     const span = document.createElement('span');
-    span.textContent = (name === 'Isha' ? '🎂 ' : name === 'Ivaan' ? '🦁 ' : '🚀 ') + name;
+    span.textContent = (name === 'Isha' ? '🎂 ' : name === 'Ivaan' ? '🚀🦁 ' : '🚀 ') + name;
     kidsDiv.appendChild(span);
   });
 }
