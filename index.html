@@ -2036,9 +2036,10 @@ document.getElementById('planet-modal').addEventListener('click', e => {
 
 // ─── Restart ──────────────────────────────────────────────────────────────────
 const DEFAULT_NAMES = [
-  'Isha', 'Martha', 'Anna', 'Iram', 'Alina',
-  'Elena', 'Nicolle', 'Valerie', 'Gamya', 'Aashrith',
-  'Binie', 'Malik', 'Miray', 'Ivaan',
+  'Isha',
+  'Aashrith', 'Alina', 'Anna', 'Binie', 'Elena',
+  'Gamya', 'Iram', 'Ivaan', 'Malik', 'Martha',
+  'Miray', 'Nicolle', 'Valerie',
 ];
 
 function restart() {
@@ -2130,7 +2131,7 @@ function buildWelcome() {
   kidsDiv.innerHTML = '';
   DEFAULT_NAMES.forEach(name => {
     const span = document.createElement('span');
-    span.textContent = (name === 'Isha' ? '🎂 ' : '🚀 ') + name;
+    span.textContent = (name === 'Isha' ? '🎂 ' : name === 'Ivaan' ? '🦁 ' : '🚀 ') + name;
     kidsDiv.appendChild(span);
   });
 }
